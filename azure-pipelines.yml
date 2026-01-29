@@ -1,0 +1,48 @@
+# azure-pipelines.yml
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+stages:
+- stage: Build
+  displayName: 'Build .NET API'
+  jobs:
+  - job: Build
+    displayName: 'Restore, Build, Publish'
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '8.0.x'
+    - script: dotnet restore
+      displayName: 'Restore dependencies'
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: 'Build solution'
+    - script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+      displayName: 'Publish app'
+    - publish: $(Build.ArtifactStagingDirectory)
+      artifact: drop
+
+- stage: Deploy
+  displayName: 'Deploy to Azure App Service'
+  dependsOn: Build
+  jobs:
+  - deployment: DeployWeb
+    displayName: 'Deploy Web App'
+    environment: 'sampleapi'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: 'azure-conn-sampleapi'  # Your service connection
+              appName: 'sampleapi-lovekush-001'        # Your Web App name
+              package: '$(Pipeline.Workspace)/drop/*'
