@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "4RjDdgvv4AcLHLGsanFzwFH1PltssscmGbgAw3uWMS4=",
+  "Source": "SampleApi",
+  "BasePath": "_content/SampleApi",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
