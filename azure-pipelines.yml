@@ -18,16 +18,21 @@ stages:
     displayName: 'Restore, Build, Publish'
     steps:
     - task: UseDotNet@2
+      displayName: 'Use .NET 8 SDK'
       inputs:
         packageType: 'sdk'
         version: '8.0.x'
+
     - script: dotnet restore
       displayName: 'Restore dependencies'
+
     - script: dotnet build --configuration $(buildConfiguration)
       displayName: 'Build solution'
-    - script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+
+    - script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish
       displayName: 'Publish app'
-    - publish: $(Build.ArtifactStagingDirectory)
+
+    - publish: $(Build.ArtifactStagingDirectory)/publish
       artifact: drop
 
 - stage: Deploy
@@ -42,7 +47,8 @@ stages:
         deploy:
           steps:
           - task: AzureWebApp@1
+            displayName: 'Deploy to Azure Web App'
             inputs:
-              azureSubscription: 'azure-conn-sampleapi'  # Your service connection
-              appName: 'sampleapi-lovekush-001'        # Your Web App name
-              package: '$(Pipeline.Workspace)/drop/*'
+              azureSubscription: 'azure-conn-sampleapi'
+              appName: 'sampleapi-lovekush-001'
+              package: '$(Pipeline.Workspace)/drop'
