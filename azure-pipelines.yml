@@ -4,8 +4,9 @@ trigger:
     include:
       - main
 
+# 👇 Microsoft-hosted agent (FREE TIER – 1800 mins/month)
 pool:
-  name: self-hosted
+  vmImage: 'ubuntu-latest'
 
 variables:
   buildConfiguration: 'Release'
