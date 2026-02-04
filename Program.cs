@@ -6,18 +6,18 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Enable Swagger in ALL environments (important for Azure)
-app.UseSwagger();
-app.UseSwaggerUI(c =>
+// Middleware (ORDER MATTERS)
+if (app.Environment.IsDevelopment())
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sample API v1");
-    c.RoutePrefix = "swagger"; // /swagger
-});
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+else
+{
+    app.UseHttpsRedirection();
+}
 
-// HTTPS redirection (Azure handles SSL)
-app.UseHttpsRedirection();
-
-// Sample endpoint
+// Endpoints
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild",
@@ -39,24 +39,21 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
-// Health check
 app.MapGet("/api/health", () =>
 {
     return Results.Ok(new
     {
         status = "Healthy",
+        environment = app.Environment.EnvironmentName,
         timestamp = DateTime.UtcNow
     });
 })
 .WithName("HealthCheck")
 .WithOpenApi();
 
-// Environment check (VERY IMPORTANT for Azure validation)
-app.MapGet("/env", () =>
+app.Run();
+
+record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
-    return Results.Ok(new
-    {
-        aspnetcoreEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
-        envName = Environment.GetEnvironmentVariable("ENV_NAME")
-    });
-})
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+}
