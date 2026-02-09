@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LovekushChauhan\\SampleApi\\SampleApi.csproj": {}
+    "C:\\Users\\LovekushChauhan\\sampleapi\\SampleApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LovekushChauhan\\SampleApi\\SampleApi.csproj": {
+    "C:\\Users\\LovekushChauhan\\sampleapi\\SampleApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LovekushChauhan\\SampleApi\\SampleApi.csproj",
+        "projectUniqueName": "C:\\Users\\LovekushChauhan\\sampleapi\\SampleApi.csproj",
         "projectName": "SampleApi",
-        "projectPath": "C:\\Users\\LovekushChauhan\\SampleApi\\SampleApi.csproj",
+        "projectPath": "C:\\Users\\LovekushChauhan\\sampleapi\\SampleApi.csproj",
         "packagesPath": "C:\\Users\\LovekushChauhan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LovekushChauhan\\SampleApi\\obj\\",
+        "outputPath": "C:\\Users\\LovekushChauhan\\sampleapi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\LovekushChauhan\\AppData\\Roaming\\NuGet\\NuGet.Config"

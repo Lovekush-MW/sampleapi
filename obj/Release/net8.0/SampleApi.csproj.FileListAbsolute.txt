@@ -31,3 +31,9 @@ C:\Users\LovekushChauhan\SampleApi\obj\Release\net8.0\refint\SampleApi.dll
 C:\Users\LovekushChauhan\SampleApi\obj\Release\net8.0\SampleApi.pdb
 C:\Users\LovekushChauhan\SampleApi\obj\Release\net8.0\SampleApi.genruntimeconfig.cache
 C:\Users\LovekushChauhan\SampleApi\obj\Release\net8.0\ref\SampleApi.dll
+C:\Users\LovekushChauhan\sampleapi\obj\Release\net8.0\SampleApi.sourcelink.json
+C:\Users\LovekushChauhan\sampleapi\bin\Release\net8.0\publish\web.config
+C:\Users\LovekushChauhan\sampleapi\bin\Release\net8.0\publish\appsettings.Development.json
+C:\Users\LovekushChauhan\sampleapi\bin\Release\net8.0\publish\appsettings.json
+C:\Users\LovekushChauhan\sampleapi\bin\Release\net8.0\publish\SampleApi.deps.json
+C:\Users\LovekushChauhan\sampleapi\bin\Release\net8.0\publish\SampleApi.runtimeconfig.json

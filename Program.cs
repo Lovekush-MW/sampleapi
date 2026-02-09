@@ -51,6 +51,20 @@ app.MapGet("/api/health", () =>
 .WithName("HealthCheck")
 .WithOpenApi();
 
+
+// 🔹 NEW ENDPOINT — reads Key Vault secret from App Settings
+app.MapGet("/env", () =>
+{
+    var secret = Environment.GetEnvironmentVariable("MySecret");
+
+    return Results.Ok(new
+    {
+        MySecret = string.IsNullOrEmpty(secret) ? "NOT FOUND" : secret
+    });
+})
+.WithName("ReadKeyVaultSecret")
+.WithOpenApi();
+
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
