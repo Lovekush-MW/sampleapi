@@ -17,6 +17,27 @@ else
     app.UseHttpsRedirection();
 }
 
+// 🔐 Require Azure AD Login (App Service Authentication)
+app.Use(async (context, next) =>
+{
+    // Allow anonymous access to health probe if needed (optional)
+    // if (context.Request.Path.StartsWithSegments("/api/health"))
+    // {
+    //     await next();
+    //     return;
+    // }
+
+    if (!context.Request.Headers.ContainsKey("X-MS-CLIENT-PRINCIPAL"))
+    {
+        context.Response.StatusCode = 401;
+        await context.Response.WriteAsync("Unauthorized - Please login via Azure AD");
+        return;
+    }
+
+    await next();
+});
+
+
 // Endpoints
 var summaries = new[]
 {
@@ -52,7 +73,7 @@ app.MapGet("/api/health", () =>
 .WithOpenApi();
 
 
-// 🔹 NEW ENDPOINT — reads Key Vault secret from App Settings
+// 🔹 Read Key Vault Secret from App Settings
 app.MapGet("/env", () =>
 {
     var secret = Environment.GetEnvironmentVariable("MySecret");
