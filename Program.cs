@@ -23,17 +23,17 @@ else
 // 🔐 Require Azure AD Login (App Service Authentication)
 app.Use(async (context, next) =>
 {
-    // Allow anonymous access to health endpoint (recommended for Azure probes)
+    // Allow anonymous health endpoint (needed for Azure probes)
     if (context.Request.Path.StartsWithSegments("/api/health"))
     {
         await next();
         return;
     }
 
+    // If user NOT logged in → redirect to Azure AD login
     if (!context.Request.Headers.ContainsKey("X-MS-CLIENT-PRINCIPAL"))
     {
-        context.Response.StatusCode = 401;
-        await context.Response.WriteAsync("Unauthorized - Please login via Azure AD");
+        context.Response.Redirect("/.auth/login/aad");
         return;
     }
 
@@ -41,7 +41,7 @@ app.Use(async (context, next) =>
 });
 
 
-// ================= ROOT ENDPOINT (Fix 404 after login) =================
+// ================= ROOT ENDPOINT =================
 app.MapGet("/", (HttpContext context) =>
 {
     string userEmail = "Unknown";
@@ -64,13 +64,13 @@ app.MapGet("/", (HttpContext context) =>
 
     return Results.Ok(new
     {
-        message = "Sample API is running securely with Azure AD 🚀",
+        message = "Sample API running securely with Azure AD + Key Vault 🚀",
         loggedInUser = userEmail,
         endpoints = new[]
         {
             "/weatherforecast",
-            "/api/health",
-            "/env"
+            "/api/health (public)",
+            "/env (secured)"
         }
     });
 });
@@ -99,7 +99,7 @@ app.MapGet("/weatherforecast", () =>
 .WithOpenApi();
 
 
-// ================= HEALTH =================
+// ================= HEALTH (PUBLIC) =================
 app.MapGet("/api/health", () =>
 {
     return Results.Ok(new
@@ -113,7 +113,7 @@ app.MapGet("/api/health", () =>
 .WithOpenApi();
 
 
-// ================= KEY VAULT SECRET =================
+// ================= KEY VAULT SECRET (SECURED) =================
 app.MapGet("/env", () =>
 {
     var secret = Environment.GetEnvironmentVariable("MySecret");
