@@ -1,3 +1,6 @@
+using System.Text;
+using System.Text.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Services
@@ -20,12 +23,12 @@ else
 // 🔐 Require Azure AD Login (App Service Authentication)
 app.Use(async (context, next) =>
 {
-    // Allow anonymous access to health probe if needed (optional)
-    // if (context.Request.Path.StartsWithSegments("/api/health"))
-    // {
-    //     await next();
-    //     return;
-    // }
+    // Allow anonymous access to health endpoint (recommended for Azure probes)
+    if (context.Request.Path.StartsWithSegments("/api/health"))
+    {
+        await next();
+        return;
+    }
 
     if (!context.Request.Headers.ContainsKey("X-MS-CLIENT-PRINCIPAL"))
     {
@@ -38,7 +41,42 @@ app.Use(async (context, next) =>
 });
 
 
-// Endpoints
+// ================= ROOT ENDPOINT (Fix 404 after login) =================
+app.MapGet("/", (HttpContext context) =>
+{
+    string userEmail = "Unknown";
+
+    if (context.Request.Headers.TryGetValue("X-MS-CLIENT-PRINCIPAL", out var header))
+    {
+        var decoded = Encoding.UTF8.GetString(Convert.FromBase64String(header!));
+        using var doc = JsonDocument.Parse(decoded);
+        var claims = doc.RootElement.GetProperty("claims");
+
+        foreach (var claim in claims.EnumerateArray())
+        {
+            if (claim.GetProperty("typ").GetString() == "preferred_username")
+            {
+                userEmail = claim.GetProperty("val").GetString() ?? "Unknown";
+                break;
+            }
+        }
+    }
+
+    return Results.Ok(new
+    {
+        message = "Sample API is running securely with Azure AD 🚀",
+        loggedInUser = userEmail,
+        endpoints = new[]
+        {
+            "/weatherforecast",
+            "/api/health",
+            "/env"
+        }
+    });
+});
+
+
+// ================= WEATHER =================
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild",
@@ -60,6 +98,8 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
+
+// ================= HEALTH =================
 app.MapGet("/api/health", () =>
 {
     return Results.Ok(new
@@ -73,7 +113,7 @@ app.MapGet("/api/health", () =>
 .WithOpenApi();
 
 
-// 🔹 Read Key Vault Secret from App Settings
+// ================= KEY VAULT SECRET =================
 app.MapGet("/env", () =>
 {
     var secret = Environment.GetEnvironmentVariable("MySecret");
