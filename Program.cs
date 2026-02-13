@@ -1,82 +1,46 @@
-using System.Text;
-using System.Text.Json;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Identity.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Services
+// ================= SERVICES =================
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add Azure AD JWT authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
-// Middleware (ORDER MATTERS)
+// ================= MIDDLEWARE =================
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-else
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+// ================= ROOT (PUBLIC) =================
+app.MapGet("/", () =>
 {
-    app.UseHttpsRedirection();
-}
-
-// 🔐 Require Azure AD Login (App Service Authentication)
-app.Use(async (context, next) =>
-{
-    // Allow anonymous health endpoint (needed for Azure probes)
-    if (context.Request.Path.StartsWithSegments("/api/health"))
-    {
-        await next();
-        return;
-    }
-
-    // If user NOT logged in → redirect to Azure AD login
-    if (!context.Request.Headers.ContainsKey("X-MS-CLIENT-PRINCIPAL"))
-    {
-        context.Response.Redirect("/.auth/login/aad");
-        return;
-    }
-
-    await next();
-});
-
-
-// ================= ROOT ENDPOINT =================
-app.MapGet("/", (HttpContext context) =>
-{
-    string userEmail = "Unknown";
-
-    if (context.Request.Headers.TryGetValue("X-MS-CLIENT-PRINCIPAL", out var header))
-    {
-        var decoded = Encoding.UTF8.GetString(Convert.FromBase64String(header!));
-        using var doc = JsonDocument.Parse(decoded);
-        var claims = doc.RootElement.GetProperty("claims");
-
-        foreach (var claim in claims.EnumerateArray())
-        {
-            if (claim.GetProperty("typ").GetString() == "preferred_username")
-            {
-                userEmail = claim.GetProperty("val").GetString() ?? "Unknown";
-                break;
-            }
-        }
-    }
-
     return Results.Ok(new
     {
-        message = "Sample API running securely with Azure AD + Key Vault 🚀",
-        loggedInUser = userEmail,
+        message = "Sample API running 🚀",
         endpoints = new[]
         {
-            "/weatherforecast",
-            "/api/health (public)",
-            "/env (secured)"
+            "/weatherforecast (secured)",
+            "/env (secured)",
+            "/api/health (public)"
         }
     });
 });
 
-
-// ================= WEATHER =================
+// ================= WEATHER (SECURED) =================
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild",
@@ -87,7 +51,7 @@ app.MapGet("/weatherforecast", () =>
 {
     var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast(
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            DateOnly.FromDateTime(DateTime.UtcNow.AddDays(index)),
             Random.Shared.Next(-20, 55),
             summaries[Random.Shared.Next(summaries.Length)]
         ))
@@ -95,9 +59,7 @@ app.MapGet("/weatherforecast", () =>
 
     return forecast;
 })
-.WithName("GetWeatherForecast")
-.WithOpenApi();
-
+.RequireAuthorization(); // <- Secured
 
 // ================= HEALTH (PUBLIC) =================
 app.MapGet("/api/health", () =>
@@ -105,15 +67,11 @@ app.MapGet("/api/health", () =>
     return Results.Ok(new
     {
         status = "Healthy",
-        environment = app.Environment.EnvironmentName,
         timestamp = DateTime.UtcNow
     });
-})
-.WithName("HealthCheck")
-.WithOpenApi();
+});
 
-
-// ================= KEY VAULT SECRET (SECURED) =================
+// ================= ENV SECRET (SECURED) =================
 app.MapGet("/env", () =>
 {
     var secret = Environment.GetEnvironmentVariable("MySecret");
@@ -123,8 +81,7 @@ app.MapGet("/env", () =>
         MySecret = string.IsNullOrEmpty(secret) ? "NOT FOUND" : secret
     });
 })
-.WithName("ReadKeyVaultSecret")
-.WithOpenApi();
+.RequireAuthorization(); // <- Secured
 
 app.Run();
 
