@@ -7,6 +7,10 @@ using Microsoft.Extensions.Caching.Memory;
 var builder = WebApplication.CreateBuilder(args);
 
 // ================= SERVICES =================
+
+// ✅ Application Insights
+builder.Services.AddApplicationInsightsTelemetry();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -43,7 +47,6 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
-
 // ================= FOR AZURE HTTPS REDIRECT FIX =================
 var forwardedOptions = new ForwardedHeadersOptions
 {
@@ -58,11 +61,10 @@ app.UseForwardedHeaders(forwardedOptions);
 
 
 // ================= MIDDLEWARE =================
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+// ✅ Enable Swagger in Azure also
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // ✅ Enable Compression Middleware
 app.UseResponseCompression();
@@ -77,6 +79,13 @@ app.Use(async (context, next) =>
     context.Response.Headers["X-Frame-Options"] = "DENY";
     context.Response.Headers["X-XSS-Protection"] = "1; mode=block";
     context.Response.Headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains";
+    await next();
+});
+
+// ✅ Request Logging Middleware (helps in App Insights)
+app.Use(async (context, next) =>
+{
+    Console.WriteLine($"Request: {context.Request.Method} {context.Request.Path}");
     await next();
 });
 
