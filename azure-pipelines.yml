@@ -1,23 +1,26 @@
-# azure-pipelines.yml
 trigger:
   branches:
     include:
       - main
 
-# 👇 Microsoft-hosted agent (FREE TIER – 1800 mins/month)
+# 👇 Use your SELF-HOSTED AGENT
 pool:
-  vmImage: 'ubuntu-latest'
+  name: Default
 
 variables:
   buildConfiguration: 'Release'
 
 stages:
+
+# ---------------- BUILD ----------------
+
 - stage: Build
   displayName: 'Build .NET API'
   jobs:
   - job: Build
     displayName: 'Restore, Build, Publish'
     steps:
+
     - task: UseDotNet@2
       displayName: 'Use .NET 8 SDK'
       inputs:
@@ -36,20 +39,29 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/publish
       artifact: drop
 
+
+# ---------------- DEPLOY ----------------
+
 - stage: Deploy
-  displayName: 'Deploy to Azure App Service'
+  displayName: 'Deploy to On-Prem IIS'
   dependsOn: Build
+
   jobs:
-  - deployment: DeployWeb
-    displayName: 'Deploy Web App'
-    environment: 'sampleapi'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureWebApp@1
-            displayName: 'Deploy to Azure Web App'
-            inputs:
-              azureSubscription: 'azure-conn-sampleapi'
-              appName: 'sampleapi-lovekush-001'
-              package: '$(Pipeline.Workspace)/drop'
+  - job: DeployToIIS
+    displayName: 'Copy files to IIS server'
+
+    steps:
+
+    - download: current
+      artifact: drop
+
+    - task: CopyFiles@2
+      displayName: 'Copy files to IIS wwwroot'
+      inputs:
+        SourceFolder: '$(Pipeline.Workspace)/drop'
+        Contents: '**'
+        TargetFolder: 'C:\inetpub\wwwroot'
+        OverWrite: true
+
+    - powershell: iisreset
+      displayName: 'Restart IIS'
