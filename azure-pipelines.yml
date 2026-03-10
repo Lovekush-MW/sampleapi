@@ -18,8 +18,19 @@ stages:
 
   jobs:
   - job: BuildJob
+
     steps:
 
+    # Disable default checkout
+    - checkout: none
+
+    # Manually clone repo using stable HTTP/1.1
+    - script: |
+        git config --global http.version HTTP/1.1
+        git clone https://github.com/Lovekush-MW/sampleapi.git .
+      displayName: Clone Repository
+
+    # Run build template
     - template: templates/build-template.yml
       parameters:
         buildConfiguration: $(buildConfiguration)
@@ -40,4 +51,9 @@ stages:
         deploy:
           steps:
 
+          # Download build artifact
+          - download: current
+            artifact: drop
+
+          # Run deploy template
           - template: templates/deploy-template.yml
