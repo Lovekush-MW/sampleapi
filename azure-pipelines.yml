@@ -19,25 +19,17 @@ stages:
   jobs:
   - job: BuildJob
 
+    workspace:
+      clean: all
+
     steps:
 
-    # Disable default checkout
-    - checkout: none
+    - checkout: self
+      clean: true
 
-    # Manually fetch repo safely
-    - script: |
-        git config --global http.version HTTP/1.1
-        git init
-        git remote add origin https://github.com/Lovekush-MW/sampleapi.git
-        git fetch --depth=1 origin main
-        git checkout FETCH_HEAD
-      displayName: Fetch repository
-
-    # Run build template
     - template: templates/build-template.yml
       parameters:
         buildConfiguration: $(buildConfiguration)
-
 
 # ---------- DEPLOY ----------
 
