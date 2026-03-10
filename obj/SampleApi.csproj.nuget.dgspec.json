@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LovekushChauhan\\sampleapi\\SampleApi.csproj": {}
+    "C:\\Users\\LovekushChauhan\\SampleApi\\SampleApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LovekushChauhan\\sampleapi\\SampleApi.csproj": {
+    "C:\\Users\\LovekushChauhan\\SampleApi\\SampleApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LovekushChauhan\\sampleapi\\SampleApi.csproj",
+        "projectUniqueName": "C:\\Users\\LovekushChauhan\\SampleApi\\SampleApi.csproj",
         "projectName": "SampleApi",
-        "projectPath": "C:\\Users\\LovekushChauhan\\sampleapi\\SampleApi.csproj",
+        "projectPath": "C:\\Users\\LovekushChauhan\\SampleApi\\SampleApi.csproj",
         "packagesPath": "C:\\Users\\LovekushChauhan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LovekushChauhan\\sampleapi\\obj\\",
+        "outputPath": "C:\\Users\\LovekushChauhan\\SampleApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\LovekushChauhan\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -61,7 +61,7 @@
             },
             "Microsoft.Identity.Web": {
               "target": "Package",
-              "version": "[4.3.0, )"
+              "version": "[4.5.0, )"
             },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",

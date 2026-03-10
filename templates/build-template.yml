@@ -1,0 +1,22 @@
+parameters:
+  buildConfiguration: 'Release'
+
+steps:
+
+- task: UseDotNet@2
+  displayName: Use .NET 8 SDK
+  inputs:
+    packageType: sdk
+    version: 8.0.x
+
+- script: dotnet restore
+  displayName: Restore dependencies
+
+- script: dotnet build --configuration ${{ parameters.buildConfiguration }}
+  displayName: Build solution
+
+- script: dotnet publish --configuration ${{ parameters.buildConfiguration }} --output $(Build.ArtifactStagingDirectory)/publish
+  displayName: Publish app
+
+- publish: $(Build.ArtifactStagingDirectory)/publish
+  artifact: drop

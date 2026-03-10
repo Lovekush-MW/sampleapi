@@ -3,47 +3,29 @@ trigger:
     include:
       - main
 
-# SELF HOSTED AGENT
 pool:
   name: Default
 
-# VARIABLE GROUP
 variables:
 - group: sampleapi-config
 
 stages:
 
-# ---------------- BUILD ----------------
+# ---------- BUILD ----------
 
 - stage: Build
   displayName: Build .NET API
 
   jobs:
-  - job: Build
-    displayName: Restore, Build, Publish
-
+  - job: BuildJob
     steps:
 
-    - task: UseDotNet@2
-      displayName: Use .NET 8 SDK
-      inputs:
-        packageType: sdk
-        version: 8.0.x
-
-    - script: dotnet restore
-      displayName: Restore dependencies
-
-    - script: dotnet build --configuration $(buildConfiguration)
-      displayName: Build solution
-
-    - script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish
-      displayName: Publish app
-
-    - publish: $(Build.ArtifactStagingDirectory)/publish
-      artifact: drop
+    - template: templates/build-template.yml
+      parameters:
+        buildConfiguration: $(buildConfiguration)
 
 
-# ---------------- DEPLOY ----------------
+# ---------- DEPLOY ----------
 
 - stage: Deploy
   displayName: Deploy to IIS
@@ -51,26 +33,11 @@ stages:
 
   jobs:
   - deployment: DeployWeb
-    displayName: Deploy API to IIS
-
-    environment: onprem-dev   # Azure DevOps Environment
+    environment: onprem-dev
 
     strategy:
       runOnce:
         deploy:
-
           steps:
 
-          - download: current
-            artifact: drop
-
-          - task: CopyFiles@2
-            displayName: Copy files to IIS
-            inputs:
-              SourceFolder: '$(Pipeline.Workspace)/drop'
-              Contents: '**'
-              TargetFolder: '$(iisPath)'
-              OverWrite: true
-
-          - powershell: iisreset
-            displayName: Restart IIS
+          - template: templates/deploy-template.yml

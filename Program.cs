@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.Identity.Web;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -9,46 +8,45 @@ var builder = WebApplication.CreateBuilder(args);
 
 // ================= SERVICES =================
 
-// ✅ Application Insights
-builder.Services.AddApplicationInsightsTelemetry();
+// Enable Application Insights ONLY if connection string exists
+var aiConnection = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
+
+if (!string.IsNullOrEmpty(aiConnection))
+{
+    builder.Services.AddApplicationInsightsTelemetry();
+}
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// ✅ Enable Response Compression
+
+// Enable Response Compression
 builder.Services.AddResponseCompression(options =>
 {
     options.EnableForHttps = true;
 });
 
-// ✅ Enable In-Memory Caching
+// Enable In-Memory Cache
 builder.Services.AddMemoryCache();
 
-// Add Azure AD JWT authentication
+
+// ================= AZURE AD AUTH =================
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
-builder.Services.Configure<JwtBearerOptions>(
-    JwtBearerDefaults.AuthenticationScheme,
-    options =>
-    {
-        options.TokenValidationParameters.ValidAudience =
-            builder.Configuration["AzureAd:Audience"];
-
-        options.TokenValidationParameters.ValidIssuer =
-            $"https://login.microsoftonline.com/{builder.Configuration["AzureAd:TenantId"]}/v2.0";
-    });
-
-// Add Role based authorization
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOnly", policy =>
         policy.RequireRole("admin"));
 });
 
+
 var app = builder.Build();
 
-// ================= FOR AZURE HTTPS REDIRECT FIX =================
+
+// ================= IIS / REVERSE PROXY SUPPORT =================
+
 var forwardedOptions = new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.XForwardedProto
@@ -58,20 +56,17 @@ forwardedOptions.KnownNetworks.Clear();
 forwardedOptions.KnownProxies.Clear();
 
 app.UseForwardedHeaders(forwardedOptions);
-// ================================================================
 
 
 // ================= MIDDLEWARE =================
 
-// ✅ Enable Swagger in Azure also
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// ✅ Enable Compression Middleware
 app.UseResponseCompression();
 
-// Force HTTPS
 app.UseHttpsRedirection();
+
 
 // Security Headers
 app.Use(async (context, next) =>
@@ -80,21 +75,25 @@ app.Use(async (context, next) =>
     context.Response.Headers["X-Frame-Options"] = "DENY";
     context.Response.Headers["X-XSS-Protection"] = "1; mode=block";
     context.Response.Headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains";
+
     await next();
 });
 
-// ✅ Request Logging Middleware (helps in App Insights)
+
+// Request Logging
 app.Use(async (context, next) =>
 {
     Console.WriteLine($"Request: {context.Request.Method} {context.Request.Path}");
     await next();
 });
 
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 
-// ================= ROOT (PUBLIC) =================
+// ================= ROOT =================
+
 app.MapGet("/", () =>
 {
     return Results.Ok(new
@@ -102,15 +101,16 @@ app.MapGet("/", () =>
         message = "Sample API running 🚀",
         endpoints = new[]
         {
-            "/weatherforecast (Admin only)",
-            "/env (Admin only)",
-            "/api/health (public)"
+            "/weatherforecast (Admin Only)",
+            "/env (Admin Only)",
+            "/api/health (Public)"
         }
     });
 });
 
 
-// ================= WEATHER (ADMIN ONLY) WITH CACHING =================
+// ================= WEATHER =================
+
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild",
@@ -126,8 +126,7 @@ app.MapGet("/weatherforecast", (IMemoryCache cache) =>
                 DateOnly.FromDateTime(DateTime.UtcNow.AddDays(index)),
                 Random.Shared.Next(-20, 55),
                 summaries[Random.Shared.Next(summaries.Length)]
-            ))
-            .ToArray();
+            )).ToArray();
 
         var cacheOptions = new MemoryCacheEntryOptions()
             .SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
@@ -140,7 +139,8 @@ app.MapGet("/weatherforecast", (IMemoryCache cache) =>
 .RequireAuthorization("AdminOnly");
 
 
-// ================= HEALTH (PUBLIC) =================
+// ================= HEALTH =================
+
 app.MapGet("/api/health", () =>
 {
     return Results.Ok(new
@@ -151,7 +151,8 @@ app.MapGet("/api/health", () =>
 });
 
 
-// ================= ENV SECRET (ADMIN ONLY) =================
+// ================= ENV =================
+
 app.MapGet("/env", () =>
 {
     var secret = Environment.GetEnvironmentVariable("MySecret");
@@ -163,7 +164,14 @@ app.MapGet("/env", () =>
 })
 .RequireAuthorization("AdminOnly");
 
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+
 app.Run();
+
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {

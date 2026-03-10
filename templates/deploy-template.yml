@@ -1,0 +1,15 @@
+steps:
+
+- download: current
+  artifact: drop
+
+- task: CopyFiles@2
+  displayName: Copy files to IIS
+  inputs:
+    SourceFolder: '$(Pipeline.Workspace)/drop'
+    Contents: '**'
+    TargetFolder: '$(iisPath)'
+    OverWrite: true
+
+- powershell: iisreset
+  displayName: Restart IIS
