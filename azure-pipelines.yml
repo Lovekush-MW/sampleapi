@@ -3,38 +3,41 @@ trigger:
     include:
       - main
 
-# 👇 Use your SELF-HOSTED AGENT
+# SELF HOSTED AGENT
 pool:
   name: Default
 
+# VARIABLE GROUP
 variables:
-  buildConfiguration: 'Release'
+- group: sampleapi-config
 
 stages:
 
 # ---------------- BUILD ----------------
 
 - stage: Build
-  displayName: 'Build .NET API'
+  displayName: Build .NET API
+
   jobs:
   - job: Build
-    displayName: 'Restore, Build, Publish'
+    displayName: Restore, Build, Publish
+
     steps:
 
     - task: UseDotNet@2
-      displayName: 'Use .NET 8 SDK'
+      displayName: Use .NET 8 SDK
       inputs:
-        packageType: 'sdk'
-        version: '8.0.x'
+        packageType: sdk
+        version: 8.0.x
 
     - script: dotnet restore
-      displayName: 'Restore dependencies'
+      displayName: Restore dependencies
 
     - script: dotnet build --configuration $(buildConfiguration)
-      displayName: 'Build solution'
+      displayName: Build solution
 
     - script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish
-      displayName: 'Publish app'
+      displayName: Publish app
 
     - publish: $(Build.ArtifactStagingDirectory)/publish
       artifact: drop
@@ -43,25 +46,31 @@ stages:
 # ---------------- DEPLOY ----------------
 
 - stage: Deploy
-  displayName: 'Deploy to On-Prem IIS'
+  displayName: Deploy to IIS
   dependsOn: Build
 
   jobs:
-  - job: DeployToIIS
-    displayName: 'Copy files to IIS server'
+  - deployment: DeployWeb
+    displayName: Deploy API to IIS
 
-    steps:
+    environment: onprem-dev   # Azure DevOps Environment
 
-    - download: current
-      artifact: drop
+    strategy:
+      runOnce:
+        deploy:
 
-    - task: CopyFiles@2
-      displayName: 'Copy files to IIS wwwroot'
-      inputs:
-        SourceFolder: '$(Pipeline.Workspace)/drop'
-        Contents: '**'
-        TargetFolder: 'C:\inetpub\wwwroot'
-        OverWrite: true
+          steps:
 
-    - powershell: iisreset
-      displayName: 'Restart IIS'
+          - download: current
+            artifact: drop
+
+          - task: CopyFiles@2
+            displayName: Copy files to IIS
+            inputs:
+              SourceFolder: '$(Pipeline.Workspace)/drop'
+              Contents: '**'
+              TargetFolder: '$(iisPath)'
+              OverWrite: true
+
+          - powershell: iisreset
+            displayName: Restart IIS
