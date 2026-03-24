@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Initialize CodeQL
-        uses: ./.act/codeql-action/init
+        uses: github/codeql-action/init@v3
         with:
           languages: csharp
 
@@ -34,19 +34,4 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Perform CodeQL Analysis
-        uses: ./.act/codeql-action/analyze
-        with:
-          upload: false
-          output-dir: results
-        env:
-          CODEQL_ACTION_NO_TELEMETRY: true
-        continue-on-error: true
-
-      - name: Copy results manually
-        run: |
-          cp -r /tmp/codeql_databases ./results || true
-
-      - name: Debug results
-        run: |
-          echo "Checking results folder"
-          ls -R results || echo "No results found"
+        uses: github/codeql-action/analyze@v3
