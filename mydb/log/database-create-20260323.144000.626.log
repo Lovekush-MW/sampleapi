@@ -1,0 +1,1039 @@
+[2026-03-23 14:40:00] This is codeql database create mydb --language=csharp --command=dotnet build --overwrite
+[2026-03-23 14:40:00] Log file was started late.
+[2026-03-23 14:40:00] [PROGRESS] database create> Initializing database at C:\Users\LovekushChauhan\SampleApi\mydb.
+[2026-03-23 14:40:00] Running plumbing command: codeql database init --overwrite --language=csharp --extractor-options-verbosity=1 --qlconfig-file=C:\Users\LovekushChauhan\sampleapi\qlconfig.yml --source-root=C:\Users\LovekushChauhan\SampleApi --allow-missing-source-root=false --allow-already-existing -- C:\Users\LovekushChauhan\SampleApi\mydb
+[2026-03-23 14:40:00] Calling plumbing command: codeql resolve languages --extractor-options-verbosity=1 --format=betterjson
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Scanning for [codeql-extractor.yml] from C:\codeql\.codeqlmanifest.json
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\actions\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\cpp\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\csharp\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\csv\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\go\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\html\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\java\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\javascript\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\properties\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\python\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\ruby\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\rust\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\swift\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\xml\codeql-extractor.yml.
+[2026-03-23 14:40:00] [DETAILS] resolve languages> Parsing C:\codeql\yaml\codeql-extractor.yml.
+[2026-03-23 14:40:01] Plumbing command codeql resolve languages completed:
+                      {
+                        "aliases" : {
+                          "c" : "cpp",
+                          "c++" : "cpp",
+                          "c-c++" : "cpp",
+                          "c-cpp" : "cpp",
+                          "c#" : "csharp",
+                          "java-kotlin" : "java",
+                          "kotlin" : "java",
+                          "javascript-typescript" : "javascript",
+                          "typescript" : "javascript"
+                        },
+                        "extractors" : {
+                          "actions" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\actions",
+                              "extractor_options" : { }
+                            }
+                          ],
+                          "cpp" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\cpp",
+                              "extractor_options" : {
+                                "scale_timeouts" : {
+                                  "title" : "Value to scale compiler introspection timeouts with",
+                                  "description" : "The extractor attempts to determine what compiler the source code being extracted is compiled with. To this end the extractor makes additional calls to the compiler, some of which are expected to return within a certain fixed time (either 10s or 15s). On some systems that are under high load this time might be too short, and can be scaled up using this option.\n",
+                                  "type" : "string",
+                                  "pattern" : "[0-9]+"
+                                },
+                                "log_verbosity" : {
+                                  "title" : "Verbosity of the extractor logging",
+                                  "description" : "Set the verbosity of the extractor logging to 'quiet' (0), 'normal' (1), 'chatty' (2), or 'noisy' (3). The default is 'normal'.\n",
+                                  "type" : "string",
+                                  "pattern" : "[0-3]"
+                                }
+                              }
+                            }
+                          ],
+                          "csharp" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\csharp",
+                              "extractor_options" : {
+                                "trap" : {
+                                  "title" : "Options pertaining to TRAP.",
+                                  "description" : "Options pertaining to TRAP.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "compression" : {
+                                      "title" : "Controls compression for the TRAP files written by the extractor.",
+                                      "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'brotli' (the default, to write brotli-compressed TRAP), 'gzip', and 'none' (to write uncompressed TRAP).\n",
+                                      "type" : "string",
+                                      "pattern" : "^(none|gzip|brotli)$"
+                                    }
+                                  }
+                                },
+                                "buildless" : {
+                                  "title" : "DEPRECATED - Whether to use buildless (standalone) extraction.",
+                                  "description" : "DEPRECATED: Use `--build-mode none` instead.\nA value indicating, which type of extraction the autobuilder should perform. If 'true', then the standalone extractor will be used, otherwise tracing extraction will be performed. The default is 'false'. Note that buildless extraction will generally yield less accurate analysis results, and should only be used in cases where it is not possible to build the code (for example if it uses inaccessible dependencies).\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                },
+                                "logging" : {
+                                  "title" : "Options pertaining to logging.",
+                                  "description" : "Options pertaining to logging.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "verbosity" : {
+                                      "title" : "Extractor logging verbosity level.",
+                                      "description" : "Controls the level of verbosity of the extractor. The supported levels are (in order of increasing verbosity):\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                                      "type" : "string",
+                                      "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+                                    }
+                                  }
+                                },
+                                "binlog" : {
+                                  "title" : "Binlog",
+                                  "description" : "[EXPERIMENTAL] The value is a path to the MsBuild binary log file that should be extracted. This option only works when `--build-mode none` is also specified.\n",
+                                  "type" : "array"
+                                },
+                                "buildless_dependency_dir" : {
+                                  "title" : "The path where buildless (standalone) extraction should keep dependencies.",
+                                  "description" : "If set, the buildless (standalone) extractor will store dependencies in this directory.\n",
+                                  "type" : "string"
+                                }
+                              }
+                            }
+                          ],
+                          "csv" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\csv"
+                            }
+                          ],
+                          "go" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\go",
+                              "extractor_options" : {
+                                "extract_tests" : {
+                                  "title" : "Whether to include Go test files in the CodeQL database.",
+                                  "description" : "A value indicating whether Go test files should be included in the CodeQL database. The default is 'false'.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                },
+                                "extract_vendor_dirs" : {
+                                  "title" : "Whether to include Go vendor directories in the CodeQL database.",
+                                  "description" : "A value indicating whether Go vendor directories should be included in the CodeQL database. The default is 'false'.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                }
+                              }
+                            }
+                          ],
+                          "html" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\html"
+                            }
+                          ],
+                          "java" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\java",
+                              "extractor_options" : {
+                                "exclude" : {
+                                  "title" : "A glob excluding files from analysis.",
+                                  "description" : "A glob indicating what files to exclude from the analysis. This accepts glob patterns that are supported by Java's 'getPathMatcher' implementation.\n",
+                                  "type" : "string"
+                                },
+                                "add_prefer_source" : {
+                                  "title" : "Whether to always prefer source files over class files.",
+                                  "description" : "A value indicating whether source files should be preferred over class files. If set to 'true', the extraction adds '-Xprefer:source' to the javac command line. If set to 'false', the extraction uses the default javac behavior ('-Xprefer:newer'). The default is 'true'.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                },
+                                "buildless" : {
+                                  "title" : "Whether to use buildless (standalone) extraction (experimental).",
+                                  "description" : "A value indicating, which type of extraction the autobuilder should perform. If 'true', then the standalone extractor will be used, otherwise tracing extraction will be performed. The default is 'false'. Note that buildless extraction will generally yield less accurate analysis results, and should only be used in cases where it is not possible to build the code (for example if it uses inaccessible dependencies).\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                },
+                                "buildless_dependency_dir" : {
+                                  "title" : "The path where buildless (standalone) extraction should keep dependencies.",
+                                  "description" : "If set, the buildless (standalone) extractor will store dependencies in this directory.\n",
+                                  "type" : "string"
+                                },
+                                "minimize_dependency_jars" : {
+                                  "title" : "Whether to rewrite and minimize downloaded JAR dependencies (experimental).",
+                                  "description" : "If 'true', JAR dependencies downloaded during extraction will be rewritten to remove unneeded data, such as method bodies. The default is 'false'.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                }
+                              }
+                            }
+                          ],
+                          "javascript" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\javascript",
+                              "extractor_options" : {
+                                "skip_types" : {
+                                  "title" : "Skip type extraction for TypeScript",
+                                  "description" : "Whether to skip the extraction of types in a TypeScript application",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                }
+                              }
+                            }
+                          ],
+                          "properties" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\properties"
+                            }
+                          ],
+                          "python" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\python",
+                              "extractor_options" : {
+                                "logging" : {
+                                  "title" : "Options pertaining to logging.",
+                                  "description" : "Options pertaining to logging.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "verbosity" : {
+                                      "title" : "Python extractor logging verbosity level.",
+                                      "description" : "Controls the level of verbosity of the CodeQL Python extractor.\nThe supported levels are (in order of increasing verbosity):\n\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                                      "type" : "string",
+                                      "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+                                    }
+                                  }
+                                },
+                                "python_executable_name" : {
+                                  "title" : "Controls the name of the Python executable used by the Python extractor.",
+                                  "description" : "The Python extractor uses platform-dependent heuristics to determine the name of the Python executable to use. Specifying a value for this option overrides the name of the Python executable used by the extractor. Accepted values are py, python and python3. Use this setting with caution, the Python extractor requires Python 3 to run.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(py|python|python3)$"
+                                }
+                              }
+                            }
+                          ],
+                          "ruby" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\ruby",
+                              "extractor_options" : {
+                                "trap" : {
+                                  "title" : "Options pertaining to TRAP.",
+                                  "description" : "Options pertaining to TRAP.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "compression" : {
+                                      "title" : "Controls compression for the TRAP files written by the extractor.",
+                                      "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'gzip' (the default, to write gzip-compressed TRAP) 'zstd' (to write Zstandard-compressed TRAP) and 'none' (to write uncompressed TRAP).\n",
+                                      "type" : "string",
+                                      "pattern" : "^(none|gzip|zstd)$"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "rust" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\rust",
+                              "extractor_options" : {
+                                "trap" : {
+                                  "title" : "Options pertaining to TRAP.",
+                                  "description" : "Options pertaining to TRAP.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "compression" : {
+                                      "title" : "Controls compression for the TRAP files written by the extractor.",
+                                      "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'gzip' (to write gzip-compressed TRAP) 'zstd' (to write Zstandard-compressed TRAP) and 'none' (the default, to write uncompressed TRAP).\n",
+                                      "type" : "string",
+                                      "pattern" : "^(none|gzip|zstd)$"
+                                    }
+                                  }
+                                },
+                                "cargo_target_dir" : {
+                                  "title" : "Directory to use for cargo output files.",
+                                  "description" : "This value is an optional path to use as `CARGO_TARGET_DIR` for the internal cargo commands the extractor uses. Pointing it to a persistent directory may reduce execution time of consecutive extractor runs. By default, a new scratch directory is used for each run.\n",
+                                  "type" : "string"
+                                },
+                                "cargo_target" : {
+                                  "title" : "Target architecture",
+                                  "description" : "Target architecture to use for analysis, analogous to `cargo --target`. By default the host architecture is used.\n",
+                                  "type" : "string"
+                                },
+                                "cargo_features" : {
+                                  "title" : "Cargo features to turn on",
+                                  "description" : "Comma-separated list of features to turn on. By default all features are enabled. If any features are specified, then only those features are enabled. The `default` feature must be explicitly specified if only default features are desired. Can be repeated.\n",
+                                  "type" : "array"
+                                },
+                                "cargo_cfg_overrides" : {
+                                  "title" : "Cargo cfg overrides",
+                                  "description" : "Comma-separated list of cfg settings to enable, or disable if prefixed with `-`. Can be repeated.\n",
+                                  "type" : "array"
+                                },
+                                "logging" : {
+                                  "title" : "Options pertaining to logging.",
+                                  "description" : "Options pertaining to logging.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "verbosity" : {
+                                      "title" : "Extractor logging verbosity level.",
+                                      "description" : "Controls the level of verbosity of the extractor. The supported levels are (in order of increasing verbosity):\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                                      "type" : "string",
+                                      "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+                                    },
+                                    "flamegraph" : {
+                                      "title" : "[Experimental] File path for write flame graph log",
+                                      "description" : "Collect flame graph data using the `tracing-flame` crate. To render a flame graph or chart, run the `inferno-flamegraph` command. See also: https://crates.io/crates/tracing-flame\n",
+                                      "type" : "string"
+                                    }
+                                  }
+                                },
+                                "extract_dependencies_as_source" : {
+                                  "title" : "Extract dependencies as source code",
+                                  "description" : "Extract the full source code of dependencies instead of only extracting signatures.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                }
+                              }
+                            }
+                          ],
+                          "swift" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\swift"
+                            }
+                          ],
+                          "xml" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\xml"
+                            }
+                          ],
+                          "yaml" : [
+                            {
+                              "extractor_root" : "C:\\codeql\\yaml"
+                            }
+                          ]
+                        }
+                      }
+[2026-03-23 14:40:01] [PROGRESS] database init> Calculating baseline information in C:\Users\LovekushChauhan\SampleApi
+[2026-03-23 14:40:01] [SPAMMY] database init> Ignoring the following directories when processing baseline information: .git, .hg, .svn.
+[2026-03-23 14:40:01] [DETAILS] database init> Running command in C:\Users\LovekushChauhan\SampleApi: C:\codeql\tools\win64\scc.exe --by-file --exclude-dir .git,.hg,.svn --format json --no-large --no-min .
+[2026-03-23 14:40:02] Using configure-baseline script C:\codeql\actions\tools\configure-baseline.cmd.
+[2026-03-23 14:40:02] [PROGRESS] database init> Running command in C:\Users\LovekushChauhan\SampleApi: [C:\codeql\actions\tools\configure-baseline.cmd]
+[2026-03-23 14:40:04] [SPAMMY] database init> Ignored an additional 241 files when processing baseline information for YAML due to paths and paths-ignore configuration.
+[2026-03-23 14:40:04] Using configure-baseline script C:\codeql\javascript\tools\configure-baseline.cmd.
+[2026-03-23 14:40:04] [PROGRESS] database init> Running command in C:\Users\LovekushChauhan\SampleApi: [C:\codeql\javascript\tools\configure-baseline.cmd]
+[2026-03-23 14:40:04] Using configure-baseline script C:\codeql\go\tools\configure-baseline.cmd.
+[2026-03-23 14:40:04] [PROGRESS] database init> Running command in C:\Users\LovekushChauhan\SampleApi: [C:\codeql\go\tools\configure-baseline.cmd]
+[2026-03-23 14:40:04] [SPAMMY] database init> Found 20 baseline files for actions.
+[2026-03-23 14:40:04] [SPAMMY] database init> Found 138 baseline files for javascript.
+[2026-03-23 14:40:04] [SPAMMY] database init> Found 9 baseline files for csharp.
+[2026-03-23 14:40:04] [SPAMMY] database init> Found 7 baseline files for python.
+[2026-03-23 14:40:04] [SPAMMY] database init> Found 4 baseline files for swift.
+[2026-03-23 14:40:04] [SPAMMY] database init> Found 3 baseline files for cpp.
+[2026-03-23 14:40:04] [SPAMMY] database init> Found 3 baseline files for java.
+[2026-03-23 14:40:04] [SPAMMY] database init> Found 1 baseline files for go.
+[2026-03-23 14:40:04] [SPAMMY] database init> Found 1 baseline files for ruby.
+[2026-03-23 14:40:04] [SPAMMY] database init> Found 1 baseline files for rust.
+[2026-03-23 14:40:04] [PROGRESS] database init> Calculated baseline information for languages: actions, cpp, csharp, go, java, javascript, python, ruby, rust, swift (3.5s).
+[2026-03-23 14:40:04] [PROGRESS] database init> Resolving extractor csharp.
+[2026-03-23 14:40:04] [DETAILS] database init> Found candidate extractor root for csharp: C:\codeql\csharp.
+[2026-03-23 14:40:04] [PROGRESS] database init> Successfully loaded extractor C# (csharp) from C:\codeql\csharp.
+[2026-03-23 14:40:05] [PROGRESS] database init> Created skeleton CodeQL database at C:\Users\LovekushChauhan\SampleApi\mydb. This in-progress database is ready to be populated by an extractor.
+[2026-03-23 14:40:05] Plumbing command codeql database init completed.
+[2026-03-23 14:40:05] [PROGRESS] database create> Running build command: [dotnet, build]
+[2026-03-23 14:40:05] Running plumbing command: codeql database trace-command --working-dir=C:\Users\LovekushChauhan\SampleApi --index-traceless-dbs --no-db-cluster -- C:\Users\LovekushChauhan\SampleApi\mydb dotnet build
+[2026-03-23 14:40:05] [PROGRESS] database trace-command> Running command in C:\Users\LovekushChauhan\SampleApi: [dotnet, build]
+[2026-03-23 14:40:08] [build-stdout]   Determining projects to restore...
+[2026-03-23 14:41:33] [build-stdout]   Restored C:\Users\LovekushChauhan\SampleApi\SampleApi.csproj (in 1.41 min).
+[2026-03-23 14:41:52] [build-stdout]   SampleApi -> C:\Users\LovekushChauhan\SampleApi\bin\Debug\net8.0\SampleApi.dll
+[2026-03-23 14:41:52] [build-stdout] Build succeeded.
+[2026-03-23 14:41:52] [build-stdout]     0 Warning(s)
+[2026-03-23 14:41:52] [build-stdout]     0 Error(s)
+[2026-03-23 14:41:52] [build-stdout] Time Elapsed 00:01:45.43
+[2026-03-23 14:41:52] Plumbing command codeql database trace-command completed.
+[2026-03-23 14:41:52] [PROGRESS] database create> Finalizing database at C:\Users\LovekushChauhan\SampleApi\mydb.
+[2026-03-23 14:41:52] Running plumbing command: codeql database finalize --no-db-cluster -- C:\Users\LovekushChauhan\SampleApi\mydb
+[2026-03-23 14:41:52] Using pre-finalize script C:\codeql\csharp\tools\pre-finalize.cmd.
+[2026-03-23 14:41:52] [PROGRESS] database finalize> Running pre-finalize script C:\codeql\csharp\tools\pre-finalize.cmd in C:\Users\LovekushChauhan\SampleApi.
+[2026-03-23 14:41:52] Running plumbing command: codeql database trace-command --working-dir=C:\Users\LovekushChauhan\SampleApi --no-tracing -- C:\Users\LovekushChauhan\SampleApi\mydb C:\codeql\csharp\tools\pre-finalize.cmd
+[2026-03-23 14:41:52] [PROGRESS] database trace-command> Running command in C:\Users\LovekushChauhan\SampleApi: [C:\codeql\csharp\tools\pre-finalize.cmd]
+[2026-03-23 14:41:56] Plumbing command codeql database trace-command completed.
+[2026-03-23 14:41:56] [PROGRESS] database finalize> Pre-finalize script C:\codeql\csharp\tools\pre-finalize.cmd completed in 4209 ms.
+[2026-03-23 14:41:56] [PROGRESS] database finalize> Running TRAP import for CodeQL database at C:\Users\LovekushChauhan\SampleApi\mydb...
+[2026-03-23 14:41:56] Running plumbing command: codeql dataset import --dbscheme=C:\codeql\csharp\semmlecode.csharp.dbscheme -- C:\Users\LovekushChauhan\SampleApi\mydb\db-csharp C:\Users\LovekushChauhan\SampleApi\mydb\trap\csharp
+[2026-03-23 14:41:57] Clearing disk cache since the version file C:\Users\LovekushChauhan\SampleApi\mydb\db-csharp\default\cache\version does not exist
+[2026-03-23 14:41:57] Tuple pool not found. Clearing relations with cached strings
+[2026-03-23 14:41:57] Trimming disk cache at C:\Users\LovekushChauhan\SampleApi\mydb\db-csharp\default\cache in mode clear.
+[2026-03-23 14:41:57] Sequence stamp origin is -5933509701343708497
+[2026-03-23 14:41:57] Pausing evaluation to hard-clear memory at sequence stamp o+0
+[2026-03-23 14:41:57] Unpausing evaluation
+[2026-03-23 14:41:57] Pausing evaluation to quickly trim disk at sequence stamp o+1
+[2026-03-23 14:41:57] Unpausing evaluation
+[2026-03-23 14:41:57] Pausing evaluation to zealously trim disk at sequence stamp o+2
+[2026-03-23 14:41:57] Unpausing evaluation
+[2026-03-23 14:41:57] Trimming completed (15ms): Purged everything.
+[2026-03-23 14:41:57] Scanning for files in C:\Users\LovekushChauhan\SampleApi\mydb\trap\csharp
+[2026-03-23 14:41:57] Found 380 TRAP files (12.80 MiB)
+[2026-03-23 14:41:57] [PROGRESS] dataset import> Importing TRAP files
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Antiforgery.dll.trap.br (1 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Authentication.Abstractions.dll.trap.br (2 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Authentication.BearerToken.dll.trap.br (3 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Authentication.Cookies.dll.trap.br (4 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Authentication.Core.dll.trap.br (5 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Authentication.OAuth.dll.trap.br (6 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Authentication.dll.trap.br (7 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Authorization.Policy.dll.trap.br (8 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Authorization.dll.trap.br (9 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Components.Authorization.dll.trap.br (10 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Components.Endpoints.dll.trap.br (11 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Components.Forms.dll.trap.br (12 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Components.Server.dll.trap.br (13 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Components.Web.dll.trap.br (14 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Components.dll.trap.br (15 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Connections.Abstractions.dll.trap.br (16 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.CookiePolicy.dll.trap.br (17 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Cors.dll.trap.br (18 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Cryptography.Internal.dll.trap.br (19 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Cryptography.KeyDerivation.dll.trap.br (20 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.DataProtection.Abstractions.dll.trap.br (21 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.DataProtection.Extensions.dll.trap.br (22 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.DataProtection.dll.trap.br (23 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Diagnostics.Abstractions.dll.trap.br (24 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Diagnostics.HealthChecks.dll.trap.br (25 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Diagnostics.dll.trap.br (26 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.HostFiltering.dll.trap.br (27 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Hosting.Abstractions.dll.trap.br (28 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Hosting.Server.Abstractions.dll.trap.br (29 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Hosting.dll.trap.br (30 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Html.Abstractions.dll.trap.br (31 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Http.Abstractions.dll.trap.br (32 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Http.Connections.Common.dll.trap.br (33 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Http.Connections.dll.trap.br (34 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Http.Extensions.dll.trap.br (35 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Http.Features.dll.trap.br (36 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Http.Results.dll.trap.br (37 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Http.dll.trap.br (38 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.HttpLogging.dll.trap.br (39 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.HttpOverrides.dll.trap.br (40 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.HttpsPolicy.dll.trap.br (41 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Identity.dll.trap.br (42 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Localization.Routing.dll.trap.br (43 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Localization.dll.trap.br (44 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Metadata.dll.trap.br (45 of 380)
+[2026-03-23 14:41:57] Importing Microsoft.AspNetCore.Mvc.Abstractions.dll.trap.br (46 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Mvc.ApiExplorer.dll.trap.br (47 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Mvc.Core.dll.trap.br (48 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Mvc.Cors.dll.trap.br (49 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Mvc.DataAnnotations.dll.trap.br (50 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Mvc.Formatters.Json.dll.trap.br (51 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Mvc.Formatters.Xml.dll.trap.br (52 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Mvc.Localization.dll.trap.br (53 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Mvc.Razor.dll.trap.br (54 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Mvc.RazorPages.dll.trap.br (55 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Mvc.TagHelpers.dll.trap.br (56 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Mvc.ViewFeatures.dll.trap.br (57 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Mvc.dll.trap.br (58 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.OutputCaching.dll.trap.br (59 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.RateLimiting.dll.trap.br (60 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Razor.Runtime.dll.trap.br (61 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Razor.dll.trap.br (62 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.RequestDecompression.dll.trap.br (63 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.ResponseCaching.Abstractions.dll.trap.br (64 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.ResponseCaching.dll.trap.br (65 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.ResponseCompression.dll.trap.br (66 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Rewrite.dll.trap.br (67 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Routing.Abstractions.dll.trap.br (68 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Routing.dll.trap.br (69 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Server.HttpSys.dll.trap.br (70 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Server.IIS.dll.trap.br (71 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Server.IISIntegration.dll.trap.br (72 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Server.Kestrel.Core.dll.trap.br (73 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Server.Kestrel.Transport.NamedPipes.dll.trap.br (74 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Server.Kestrel.Transport.Quic.dll.trap.br (75 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.dll.trap.br (76 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Server.Kestrel.dll.trap.br (77 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.Session.dll.trap.br (78 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.SignalR.Common.dll.trap.br (79 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.SignalR.Core.dll.trap.br (80 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.SignalR.Protocols.Json.dll.trap.br (81 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.SignalR.dll.trap.br (82 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.StaticFiles.dll.trap.br (83 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.WebSockets.dll.trap.br (84 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.WebUtilities.dll.trap.br (85 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.AspNetCore.dll.trap.br (86 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Caching.Abstractions.dll.trap.br (87 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Caching.Memory.dll.trap.br (88 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Configuration.Abstractions.dll.trap.br (89 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Configuration.Binder.dll.trap.br (90 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Configuration.CommandLine.dll.trap.br (91 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Configuration.EnvironmentVariables.dll.trap.br (92 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Configuration.FileExtensions.dll.trap.br (93 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Configuration.Ini.dll.trap.br (94 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Configuration.Json.dll.trap.br (95 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Configuration.KeyPerFile.dll.trap.br (96 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Configuration.UserSecrets.dll.trap.br (97 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Configuration.Xml.dll.trap.br (98 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Configuration.dll.trap.br (99 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.DependencyInjection.Abstractions.dll.trap.br (100 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.DependencyInjection.dll.trap.br (101 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Diagnostics.Abstractions.dll.trap.br (102 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll.trap.br (103 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Diagnostics.HealthChecks.dll.trap.br (104 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Diagnostics.dll.trap.br (105 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Features.dll.trap.br (106 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.FileProviders.Abstractions.dll.trap.br (107 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.FileProviders.Composite.dll.trap.br (108 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.FileProviders.Embedded.dll.trap.br (109 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.FileProviders.Physical.dll.trap.br (110 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.FileSystemGlobbing.dll.trap.br (111 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Hosting.Abstractions.dll.trap.br (112 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Hosting.dll.trap.br (113 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Http.dll.trap.br (114 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Identity.Core.dll.trap.br (115 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Identity.Stores.dll.trap.br (116 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Localization.Abstractions.dll.trap.br (117 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Localization.dll.trap.br (118 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Logging.Abstractions.dll.trap.br (119 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Logging.Configuration.dll.trap.br (120 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Logging.Console.dll.trap.br (121 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Logging.Debug.dll.trap.br (122 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Logging.EventLog.dll.trap.br (123 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Logging.EventSource.dll.trap.br (124 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Logging.TraceSource.dll.trap.br (125 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Logging.dll.trap.br (126 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.ObjectPool.dll.trap.br (127 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Options.ConfigurationExtensions.dll.trap.br (128 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Options.DataAnnotations.dll.trap.br (129 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Options.dll.trap.br (130 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.Primitives.dll.trap.br (131 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Extensions.WebEncoders.dll.trap.br (132 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.JSInterop.dll.trap.br (133 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Net.Http.Headers.dll.trap.br (134 of 380)
+[2026-03-23 14:41:58] Importing System.Diagnostics.EventLog.dll.trap.br (135 of 380)
+[2026-03-23 14:41:58] Importing System.IO.Pipelines.dll.trap.br (136 of 380)
+[2026-03-23 14:41:58] Importing System.Security.Cryptography.Xml.dll.trap.br (137 of 380)
+[2026-03-23 14:41:58] Importing System.Threading.RateLimiting.dll.trap.br (138 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.CSharp.dll.trap.br (139 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.VisualBasic.Core.dll.trap.br (140 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.VisualBasic.dll.trap.br (141 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Win32.Primitives.dll.trap.br (142 of 380)
+[2026-03-23 14:41:58] Importing Microsoft.Win32.Registry.dll.trap.br (143 of 380)
+[2026-03-23 14:41:58] Importing System.AppContext.dll.trap.br (144 of 380)
+[2026-03-23 14:41:58] Importing System.Buffers.dll.trap.br (145 of 380)
+[2026-03-23 14:41:58] Importing System.Collections.Concurrent.dll.trap.br (146 of 380)
+[2026-03-23 14:41:58] Importing System.Collections.Immutable.dll.trap.br (147 of 380)
+[2026-03-23 14:41:58] Importing System.Collections.NonGeneric.dll.trap.br (148 of 380)
+[2026-03-23 14:41:58] Importing System.Collections.Specialized.dll.trap.br (149 of 380)
+[2026-03-23 14:41:58] Importing System.Collections.dll.trap.br (150 of 380)
+[2026-03-23 14:41:58] Importing System.ComponentModel.Annotations.dll.trap.br (151 of 380)
+[2026-03-23 14:41:58] Importing System.ComponentModel.DataAnnotations.dll.trap.br (152 of 380)
+[2026-03-23 14:41:58] Importing System.ComponentModel.EventBasedAsync.dll.trap.br (153 of 380)
+[2026-03-23 14:41:58] Importing System.ComponentModel.Primitives.dll.trap.br (154 of 380)
+[2026-03-23 14:41:58] Importing System.ComponentModel.TypeConverter.dll.trap.br (155 of 380)
+[2026-03-23 14:41:58] Importing System.ComponentModel.dll.trap.br (156 of 380)
+[2026-03-23 14:41:58] Importing System.Configuration.dll.trap.br (157 of 380)
+[2026-03-23 14:41:58] Importing System.Console.dll.trap.br (158 of 380)
+[2026-03-23 14:41:58] Importing System.Core.dll.trap.br (159 of 380)
+[2026-03-23 14:41:58] Importing System.Data.Common.dll.trap.br (160 of 380)
+[2026-03-23 14:41:58] Importing System.Data.DataSetExtensions.dll.trap.br (161 of 380)
+[2026-03-23 14:41:58] Importing System.Data.dll.trap.br (162 of 380)
+[2026-03-23 14:41:58] Importing System.Diagnostics.Contracts.dll.trap.br (163 of 380)
+[2026-03-23 14:41:58] Importing System.Diagnostics.Debug.dll.trap.br (164 of 380)
+[2026-03-23 14:41:58] Importing System.Diagnostics.FileVersionInfo.dll.trap.br (165 of 380)
+[2026-03-23 14:41:58] Importing System.Diagnostics.Process.dll.trap.br (166 of 380)
+[2026-03-23 14:41:58] Importing System.Diagnostics.StackTrace.dll.trap.br (167 of 380)
+[2026-03-23 14:41:58] Importing System.Diagnostics.TextWriterTraceListener.dll.trap.br (168 of 380)
+[2026-03-23 14:41:58] Importing System.Diagnostics.Tools.dll.trap.br (169 of 380)
+[2026-03-23 14:41:58] Importing System.Diagnostics.TraceSource.dll.trap.br (170 of 380)
+[2026-03-23 14:41:58] Importing System.Diagnostics.Tracing.dll.trap.br (171 of 380)
+[2026-03-23 14:41:58] Importing System.Drawing.Primitives.dll.trap.br (172 of 380)
+[2026-03-23 14:41:58] Importing System.Drawing.dll.trap.br (173 of 380)
+[2026-03-23 14:41:58] Importing System.Dynamic.Runtime.dll.trap.br (174 of 380)
+[2026-03-23 14:41:58] Importing System.Formats.Asn1.dll.trap.br (175 of 380)
+[2026-03-23 14:41:58] Importing System.Formats.Tar.dll.trap.br (176 of 380)
+[2026-03-23 14:41:58] Importing System.Globalization.Calendars.dll.trap.br (177 of 380)
+[2026-03-23 14:41:58] Importing System.Globalization.Extensions.dll.trap.br (178 of 380)
+[2026-03-23 14:41:58] Importing System.Globalization.dll.trap.br (179 of 380)
+[2026-03-23 14:41:58] Importing System.IO.Compression.Brotli.dll.trap.br (180 of 380)
+[2026-03-23 14:41:58] Importing System.IO.Compression.FileSystem.dll.trap.br (181 of 380)
+[2026-03-23 14:41:58] Importing System.IO.Compression.ZipFile.dll.trap.br (182 of 380)
+[2026-03-23 14:41:58] Importing System.IO.Compression.dll.trap.br (183 of 380)
+[2026-03-23 14:41:58] Importing System.IO.FileSystem.AccessControl.dll.trap.br (184 of 380)
+[2026-03-23 14:41:58] Importing System.IO.FileSystem.DriveInfo.dll.trap.br (185 of 380)
+[2026-03-23 14:41:58] Importing System.IO.FileSystem.Primitives.dll.trap.br (186 of 380)
+[2026-03-23 14:41:58] Importing System.IO.FileSystem.Watcher.dll.trap.br (187 of 380)
+[2026-03-23 14:41:58] Importing System.IO.FileSystem.dll.trap.br (188 of 380)
+[2026-03-23 14:41:58] Importing System.IO.IsolatedStorage.dll.trap.br (189 of 380)
+[2026-03-23 14:41:58] Importing System.IO.MemoryMappedFiles.dll.trap.br (190 of 380)
+[2026-03-23 14:41:58] Importing System.IO.Pipes.AccessControl.dll.trap.br (191 of 380)
+[2026-03-23 14:41:58] Importing System.IO.Pipes.dll.trap.br (192 of 380)
+[2026-03-23 14:41:58] Importing System.IO.UnmanagedMemoryStream.dll.trap.br (193 of 380)
+[2026-03-23 14:41:58] Importing System.IO.dll.trap.br (194 of 380)
+[2026-03-23 14:41:58] Importing System.Linq.Expressions.dll.trap.br (195 of 380)
+[2026-03-23 14:41:58] Importing System.Linq.Parallel.dll.trap.br (196 of 380)
+[2026-03-23 14:41:58] Importing System.Linq.Queryable.dll.trap.br (197 of 380)
+[2026-03-23 14:41:58] Importing System.Linq.dll.trap.br (198 of 380)
+[2026-03-23 14:41:58] Importing System.Memory.dll.trap.br (199 of 380)
+[2026-03-23 14:41:58] Importing System.Net.Http.Json.dll.trap.br (200 of 380)
+[2026-03-23 14:41:58] Importing System.Net.Http.dll.trap.br (201 of 380)
+[2026-03-23 14:41:58] Importing System.Net.HttpListener.dll.trap.br (202 of 380)
+[2026-03-23 14:41:58] Importing System.Net.Mail.dll.trap.br (203 of 380)
+[2026-03-23 14:41:58] Importing System.Net.NameResolution.dll.trap.br (204 of 380)
+[2026-03-23 14:41:58] Importing System.Net.NetworkInformation.dll.trap.br (205 of 380)
+[2026-03-23 14:41:58] Importing System.Net.Ping.dll.trap.br (206 of 380)
+[2026-03-23 14:41:58] Importing System.Net.Primitives.dll.trap.br (207 of 380)
+[2026-03-23 14:41:58] Importing System.Net.Quic.dll.trap.br (208 of 380)
+[2026-03-23 14:41:58] Importing System.Net.Requests.dll.trap.br (209 of 380)
+[2026-03-23 14:41:58] Importing System.Net.Security.dll.trap.br (210 of 380)
+[2026-03-23 14:41:58] Importing System.Net.ServicePoint.dll.trap.br (211 of 380)
+[2026-03-23 14:41:58] Importing System.Net.Sockets.dll.trap.br (212 of 380)
+[2026-03-23 14:41:58] Importing System.Net.WebClient.dll.trap.br (213 of 380)
+[2026-03-23 14:41:58] Importing System.Net.WebHeaderCollection.dll.trap.br (214 of 380)
+[2026-03-23 14:41:58] Importing System.Net.WebProxy.dll.trap.br (215 of 380)
+[2026-03-23 14:41:58] Importing System.Net.WebSockets.Client.dll.trap.br (216 of 380)
+[2026-03-23 14:41:58] Importing System.Net.WebSockets.dll.trap.br (217 of 380)
+[2026-03-23 14:41:59] Importing System.Net.dll.trap.br (218 of 380)
+[2026-03-23 14:41:59] Importing System.Numerics.Vectors.dll.trap.br (219 of 380)
+[2026-03-23 14:41:59] Importing System.Numerics.dll.trap.br (220 of 380)
+[2026-03-23 14:41:59] Importing System.ObjectModel.dll.trap.br (221 of 380)
+[2026-03-23 14:41:59] Importing System.Reflection.DispatchProxy.dll.trap.br (222 of 380)
+[2026-03-23 14:41:59] Importing System.Reflection.Emit.ILGeneration.dll.trap.br (223 of 380)
+[2026-03-23 14:41:59] Importing System.Reflection.Emit.Lightweight.dll.trap.br (224 of 380)
+[2026-03-23 14:41:59] Importing System.Reflection.Emit.dll.trap.br (225 of 380)
+[2026-03-23 14:41:59] Importing System.Reflection.Extensions.dll.trap.br (226 of 380)
+[2026-03-23 14:41:59] Importing System.Reflection.Metadata.dll.trap.br (227 of 380)
+[2026-03-23 14:41:59] Importing System.Reflection.Primitives.dll.trap.br (228 of 380)
+[2026-03-23 14:41:59] Importing System.Reflection.TypeExtensions.dll.trap.br (229 of 380)
+[2026-03-23 14:41:59] Importing System.Reflection.dll.trap.br (230 of 380)
+[2026-03-23 14:41:59] Importing System.Resources.Reader.dll.trap.br (231 of 380)
+[2026-03-23 14:41:59] Importing System.Resources.ResourceManager.dll.trap.br (232 of 380)
+[2026-03-23 14:41:59] Importing System.Resources.Writer.dll.trap.br (233 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.CompilerServices.Unsafe.dll.trap.br (234 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.CompilerServices.VisualC.dll.trap.br (235 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.Extensions.dll.trap.br (236 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.Handles.dll.trap.br (237 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.InteropServices.JavaScript.dll.trap.br (238 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.InteropServices.RuntimeInformation.dll.trap.br (239 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.InteropServices.dll.trap.br (240 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.Intrinsics.dll.trap.br (241 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.Loader.dll.trap.br (242 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.Numerics.dll.trap.br (243 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.Serialization.Formatters.dll.trap.br (244 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.Serialization.Json.dll.trap.br (245 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.Serialization.Primitives.dll.trap.br (246 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.Serialization.Xml.dll.trap.br (247 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.Serialization.dll.trap.br (248 of 380)
+[2026-03-23 14:41:59] Importing System.Runtime.dll.trap.br (249 of 380)
+[2026-03-23 14:41:59] Importing System.Security.AccessControl.dll.trap.br (250 of 380)
+[2026-03-23 14:41:59] Importing System.Security.Claims.dll.trap.br (251 of 380)
+[2026-03-23 14:41:59] Importing System.Security.Cryptography.Algorithms.dll.trap.br (252 of 380)
+[2026-03-23 14:41:59] Importing System.Security.Cryptography.Cng.dll.trap.br (253 of 380)
+[2026-03-23 14:41:59] Importing System.Security.Cryptography.Csp.dll.trap.br (254 of 380)
+[2026-03-23 14:41:59] Importing System.Security.Cryptography.Encoding.dll.trap.br (255 of 380)
+[2026-03-23 14:41:59] Importing System.Security.Cryptography.OpenSsl.dll.trap.br (256 of 380)
+[2026-03-23 14:41:59] Importing System.Security.Cryptography.Primitives.dll.trap.br (257 of 380)
+[2026-03-23 14:41:59] Importing System.Security.Cryptography.X509Certificates.dll.trap.br (258 of 380)
+[2026-03-23 14:41:59] Importing System.Security.Cryptography.dll.trap.br (259 of 380)
+[2026-03-23 14:41:59] Importing System.Security.Principal.Windows.dll.trap.br (260 of 380)
+[2026-03-23 14:41:59] Importing System.Security.Principal.dll.trap.br (261 of 380)
+[2026-03-23 14:41:59] Importing System.Security.SecureString.dll.trap.br (262 of 380)
+[2026-03-23 14:41:59] Importing System.Security.dll.trap.br (263 of 380)
+[2026-03-23 14:41:59] Importing System.ServiceModel.Web.dll.trap.br (264 of 380)
+[2026-03-23 14:41:59] Importing System.ServiceProcess.dll.trap.br (265 of 380)
+[2026-03-23 14:41:59] Importing System.Text.Encoding.CodePages.dll.trap.br (266 of 380)
+[2026-03-23 14:41:59] Importing System.Text.Encoding.Extensions.dll.trap.br (267 of 380)
+[2026-03-23 14:41:59] Importing System.Text.Encoding.dll.trap.br (268 of 380)
+[2026-03-23 14:41:59] Importing System.Text.Encodings.Web.dll.trap.br (269 of 380)
+[2026-03-23 14:41:59] Importing System.Text.Json.dll.trap.br (270 of 380)
+[2026-03-23 14:41:59] Importing System.Text.RegularExpressions.dll.trap.br (271 of 380)
+[2026-03-23 14:41:59] Importing System.Threading.Channels.dll.trap.br (272 of 380)
+[2026-03-23 14:41:59] Importing System.Threading.Overlapped.dll.trap.br (273 of 380)
+[2026-03-23 14:41:59] Importing System.Threading.Tasks.Dataflow.dll.trap.br (274 of 380)
+[2026-03-23 14:41:59] Importing System.Threading.Tasks.Extensions.dll.trap.br (275 of 380)
+[2026-03-23 14:41:59] Importing System.Threading.Tasks.Parallel.dll.trap.br (276 of 380)
+[2026-03-23 14:41:59] Importing System.Threading.Tasks.dll.trap.br (277 of 380)
+[2026-03-23 14:41:59] Importing System.Threading.Thread.dll.trap.br (278 of 380)
+[2026-03-23 14:41:59] Importing System.Threading.ThreadPool.dll.trap.br (279 of 380)
+[2026-03-23 14:41:59] Importing System.Threading.Timer.dll.trap.br (280 of 380)
+[2026-03-23 14:41:59] Importing System.Threading.dll.trap.br (281 of 380)
+[2026-03-23 14:41:59] Importing System.Transactions.Local.dll.trap.br (282 of 380)
+[2026-03-23 14:41:59] Importing System.Transactions.dll.trap.br (283 of 380)
+[2026-03-23 14:41:59] Importing System.ValueTuple.dll.trap.br (284 of 380)
+[2026-03-23 14:41:59] Importing System.Web.HttpUtility.dll.trap.br (285 of 380)
+[2026-03-23 14:41:59] Importing System.Web.dll.trap.br (286 of 380)
+[2026-03-23 14:41:59] Importing System.Windows.dll.trap.br (287 of 380)
+[2026-03-23 14:41:59] Importing System.Xml.Linq.dll.trap.br (288 of 380)
+[2026-03-23 14:41:59] Importing System.Xml.ReaderWriter.dll.trap.br (289 of 380)
+[2026-03-23 14:41:59] Importing System.Xml.Serialization.dll.trap.br (290 of 380)
+[2026-03-23 14:41:59] Importing System.Xml.XDocument.dll.trap.br (291 of 380)
+[2026-03-23 14:41:59] Importing System.Xml.XPath.XDocument.dll.trap.br (292 of 380)
+[2026-03-23 14:41:59] Importing System.Xml.XPath.dll.trap.br (293 of 380)
+[2026-03-23 14:41:59] Importing System.Xml.XmlDocument.dll.trap.br (294 of 380)
+[2026-03-23 14:41:59] Importing System.Xml.XmlSerializer.dll.trap.br (295 of 380)
+[2026-03-23 14:41:59] Importing System.Xml.dll.trap.br (296 of 380)
+[2026-03-23 14:41:59] Importing System.dll.trap.br (297 of 380)
+[2026-03-23 14:41:59] Importing WindowsBase.dll.trap.br (298 of 380)
+[2026-03-23 14:41:59] Importing mscorlib.dll.trap.br (299 of 380)
+[2026-03-23 14:41:59] Importing netstandard.dll.trap.br (300 of 380)
+[2026-03-23 14:41:59] Importing Azure.Core.dll.trap.br (301 of 380)
+[2026-03-23 14:41:59] Importing Azure.Identity.dll.trap.br (302 of 380)
+[2026-03-23 14:41:59] Importing Azure.Monitor.OpenTelemetry.Exporter.dll.trap.br (303 of 380)
+[2026-03-23 14:41:59] Importing Azure.Security.KeyVault.Certificates.dll.trap.br (304 of 380)
+[2026-03-23 14:41:59] Importing Azure.Security.KeyVault.Secrets.dll.trap.br (305 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.ApplicationInsights.dll.trap.br (306 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.ApplicationInsights.AspNetCore.dll.trap.br (307 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.AspNetCore.Authentication.JwtBearer.dll.trap.br (308 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.AspNetCore.Authentication.OpenIdConnect.dll.trap.br (309 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.AspNetCore.OpenApi.dll.trap.br (310 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.Bcl.AsyncInterfaces.dll.trap.br (311 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.Identity.Abstractions.dll.trap.br (312 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.Identity.Client.dll.trap.br (313 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.Identity.Client.Extensions.Msal.dll.trap.br (314 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.Identity.Web.dll.trap.br (315 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.Identity.Web.Certificate.dll.trap.br (316 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.Identity.Web.Certificateless.dll.trap.br (317 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.Identity.Web.Diagnostics.dll.trap.br (318 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.Identity.Web.TokenAcquisition.dll.trap.br (319 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.Identity.Web.TokenCache.dll.trap.br (320 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.IdentityModel.Abstractions.dll.trap.br (321 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.IdentityModel.JsonWebTokens.dll.trap.br (322 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.IdentityModel.Logging.dll.trap.br (323 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.IdentityModel.LoggingExtensions.dll.trap.br (324 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.IdentityModel.Protocols.dll.trap.br (325 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.IdentityModel.Protocols.OpenIdConnect.dll.trap.br (326 of 380)
+[2026-03-23 14:41:59] Importing Microsoft.IdentityModel.Tokens.dll.trap.br (327 of 380)
+[2026-03-23 14:42:00] Importing Microsoft.IdentityModel.Validators.dll.trap.br (328 of 380)
+[2026-03-23 14:42:00] Importing Microsoft.OpenApi.dll.trap.br (329 of 380)
+[2026-03-23 14:42:00] Importing OpenTelemetry.dll.trap.br (330 of 380)
+[2026-03-23 14:42:00] Importing OpenTelemetry.Api.dll.trap.br (331 of 380)
+[2026-03-23 14:42:00] Importing OpenTelemetry.Api.ProviderBuilderExtensions.dll.trap.br (332 of 380)
+[2026-03-23 14:42:00] Importing OpenTelemetry.Extensions.Hosting.dll.trap.br (333 of 380)
+[2026-03-23 14:42:00] Importing OpenTelemetry.Instrumentation.AspNetCore.dll.trap.br (334 of 380)
+[2026-03-23 14:42:00] Importing OpenTelemetry.Instrumentation.Http.dll.trap.br (335 of 380)
+[2026-03-23 14:42:00] Importing OpenTelemetry.Instrumentation.SqlClient.dll.trap.br (336 of 380)
+[2026-03-23 14:42:00] Importing OpenTelemetry.PersistentStorage.Abstractions.dll.trap.br (337 of 380)
+[2026-03-23 14:42:00] Importing OpenTelemetry.PersistentStorage.FileSystem.dll.trap.br (338 of 380)
+[2026-03-23 14:42:00] Importing Swashbuckle.AspNetCore.Swagger.dll.trap.br (339 of 380)
+[2026-03-23 14:42:00] Importing Swashbuckle.AspNetCore.SwaggerGen.dll.trap.br (340 of 380)
+[2026-03-23 14:42:00] Importing Swashbuckle.AspNetCore.SwaggerUI.dll.trap.br (341 of 380)
+[2026-03-23 14:42:00] Importing System.ClientModel.dll.trap.br (342 of 380)
+[2026-03-23 14:42:00] Importing System.Diagnostics.DiagnosticSource.dll.trap.br (343 of 380)
+[2026-03-23 14:42:00] Importing System.IdentityModel.Tokens.Jwt.dll.trap.br (344 of 380)
+[2026-03-23 14:42:00] Importing System.Memory.Data.dll.trap.br (345 of 380)
+[2026-03-23 14:42:00] Importing System.Security.Cryptography.Pkcs.dll.trap.br (346 of 380)
+[2026-03-23 14:42:00] Importing System.Security.Cryptography.ProtectedData.dll.trap.br (347 of 380)
+[2026-03-23 14:42:00] Importing csharp.csproj.trap.gz (348 of 380)
+[2026-03-23 14:42:00] Importing test.csproj.trap.gz (349 of 380)
+[2026-03-23 14:42:00] Importing HealthController.cs.trap.br (350 of 380)
+[2026-03-23 14:42:00] Importing Program.cs.trap.br (351 of 380)
+[2026-03-23 14:42:00] Importing SampleApi.csproj.trap.gz (352 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (353 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (354 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (355 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (356 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (357 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (358 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (359 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (360 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (361 of 380)
+[2026-03-23 14:42:00] Importing .NETCoreApp,Version=v8.0.AssemblyAttributes.cs.trap.br (362 of 380)
+[2026-03-23 14:42:00] Importing SampleApi.AssemblyInfo.cs.trap.br (363 of 380)
+[2026-03-23 14:42:00] Importing SampleApi.GlobalUsings.g.cs.trap.br (364 of 380)
+[2026-03-23 14:42:00] Importing SampleApi.MvcApplicationPartsAssemblyInfo.cs.trap.br (365 of 380)
+[2026-03-23 14:42:00] Importing SampleApi.dll.trap.br (366 of 380)
+[2026-03-23 14:42:00] Importing msbuild.build.SampleApi.props.trap.gz (367 of 380)
+[2026-03-23 14:42:00] Importing msbuild.buildMultiTargeting.SampleApi.props.trap.gz (368 of 380)
+[2026-03-23 14:42:00] Importing msbuild.buildTransitive.SampleApi.props.trap.gz (369 of 380)
+[2026-03-23 14:42:00] Importing SampleApi.csproj.nuget.g.props.trap.gz (370 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (371 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (372 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (373 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (374 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (375 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (376 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (377 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (378 of 380)
+[2026-03-23 14:42:00] Importing web.config.trap.gz (379 of 380)
+[2026-03-23 14:42:00] Importing metadata.trap.gz (380 of 380)
+[2026-03-23 14:42:00] [PROGRESS] dataset import> Merging relations
+[2026-03-23 14:42:01] Merging 1 fragment for 'typerefs'.
+[2026-03-23 14:42:01] Merged 18879 bytes (18.44 KiB) for 'typerefs'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'typeref_type'.
+[2026-03-23 14:42:01] Merged 18483 bytes (18.05 KiB) for 'typeref_type'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'attributes'.
+[2026-03-23 14:42:01] Merged 198771 bytes (194.11 KiB) for 'attributes'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'files'.
+[2026-03-23 14:42:01] Merged 1125 bytes (1.10 KiB) for 'files'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'folders'.
+[2026-03-23 14:42:01] Merged 587 bytes for 'folders'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'containerparent'.
+[2026-03-23 14:42:01] Merged 1277 bytes (1.25 KiB) for 'containerparent'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'file_extraction_mode'.
+[2026-03-23 14:42:01] Merged 579 bytes for 'file_extraction_mode'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'assemblies'.
+[2026-03-23 14:42:01] Merged 2350 bytes (2.29 KiB) for 'assemblies'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'attribute_location'.
+[2026-03-23 14:42:01] Merged 58256 bytes (56.89 KiB) for 'attribute_location'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'expressions'.
+[2026-03-23 14:42:01] Merged 266478 bytes (260.23 KiB) for 'expressions'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'expr_parent_top_level'.
+[2026-03-23 14:42:01] Merged 123872 bytes (120.97 KiB) for 'expr_parent_top_level'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'expr_location'.
+[2026-03-23 14:42:01] Merged 87510 bytes (85.46 KiB) for 'expr_location'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'compiler_generated'.
+[2026-03-23 14:42:01] Merged 87335 bytes (85.29 KiB) for 'compiler_generated'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'expr_value'.
+[2026-03-23 14:42:01] Merged 162664 bytes (158.85 KiB) for 'expr_value'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'types'.
+[2026-03-23 14:42:01] Merged 114101 bytes (111.43 KiB) for 'types'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'parent_namespace'.
+[2026-03-23 14:42:01] Merged 75091 bytes (73.33 KiB) for 'parent_namespace'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'modifiers'.
+[2026-03-23 14:42:01] Merged 73 bytes for 'modifiers'.
+[2026-03-23 14:42:01] Merging 3 fragments for 'has_modifiers'.
+[2026-03-23 14:42:01] Merged 534164 bytes (521.64 KiB) for 'has_modifiers'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'type_location'.
+[2026-03-23 14:42:01] Merged 19547 bytes (19.09 KiB) for 'type_location'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'nullability'.
+[2026-03-23 14:42:01] Merged 265 bytes for 'nullability'.
+[2026-03-23 14:42:01] Merging 3 fragments for 'type_nullability'.
+[2026-03-23 14:42:01] Merged 296072 bytes (289.13 KiB) for 'type_nullability'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'properties'.
+[2026-03-23 14:42:01] Merged 121545 bytes (118.70 KiB) for 'properties'.
+[2026-03-23 14:42:01] Merging 2 fragments for 'params'.
+[2026-03-23 14:42:01] Merged 864468 bytes (844.21 KiB) for 'params'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'param_location'.
+[2026-03-23 14:42:01] Merged 92056 bytes (89.90 KiB) for 'param_location'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'accessors'.
+[2026-03-23 14:42:01] Merged 140419 bytes (137.13 KiB) for 'accessors'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'accessor_location'.
+[2026-03-23 14:42:01] Merged 24998 bytes (24.41 KiB) for 'accessor_location'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'property_location'.
+[2026-03-23 14:42:01] Merged 17887 bytes (17.47 KiB) for 'property_location'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'constructors'.
+[2026-03-23 14:42:01] Merged 47269 bytes (46.16 KiB) for 'constructors'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'constructor_location'.
+[2026-03-23 14:42:01] Merged 10787 bytes (10.53 KiB) for 'constructor_location'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'methods'.
+[2026-03-23 14:42:01] Merged 264057 bytes (257.87 KiB) for 'methods'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'method_location'.
+[2026-03-23 14:42:01] Merged 44730 bytes (43.68 KiB) for 'method_location'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'expr_parent'.
+[2026-03-23 14:42:01] Merged 105389 bytes (102.92 KiB) for 'expr_parent'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'expr_argument_name'.
+[2026-03-23 14:42:01] Merged 7317 bytes (7.15 KiB) for 'expr_argument_name'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'namespaces'.
+[2026-03-23 14:42:01] Merged 1611 bytes (1.57 KiB) for 'namespaces'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'extend'.
+[2026-03-23 14:42:01] Merged 23023 bytes (22.48 KiB) for 'extend'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'constructed_generic'.
+[2026-03-23 14:42:01] Merged 53123 bytes (51.88 KiB) for 'constructed_generic'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'type_arguments'.
+[2026-03-23 14:42:01] Merged 68320 bytes (66.72 KiB) for 'type_arguments'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'implement'.
+[2026-03-23 14:42:01] Merged 83253 bytes (81.30 KiB) for 'implement'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'type_parameter_constraints'.
+[2026-03-23 14:42:01] Merged 12902 bytes (12.60 KiB) for 'type_parameter_constraints'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'delegate_return_type'.
+[2026-03-23 14:42:01] Merged 4685 bytes (4.58 KiB) for 'delegate_return_type'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'fields'.
+[2026-03-23 14:42:01] Merged 63721 bytes (62.23 KiB) for 'fields'.
+[2026-03-23 14:42:01] Merging 1 fragment for 'field_location'.
+[2026-03-23 14:42:02] Merged 12057 bytes (11.77 KiB) for 'field_location'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'nullability_parent'.
+[2026-03-23 14:42:02] Merged 684 bytes for 'nullability_parent'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'array_element_type'.
+[2026-03-23 14:42:02] Merged 1470 bytes (1.44 KiB) for 'array_element_type'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'specific_type_parameter_constraints'.
+[2026-03-23 14:42:02] Merged 2867 bytes (2.80 KiB) for 'specific_type_parameter_constraints'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'specific_type_parameter_nullability'.
+[2026-03-23 14:42:02] Merged 1796 bytes (1.75 KiB) for 'specific_type_parameter_nullability'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'type_parameters'.
+[2026-03-23 14:42:02] Merged 15971 bytes (15.60 KiB) for 'type_parameters'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'nested_types'.
+[2026-03-23 14:42:02] Merged 3286 bytes (3.21 KiB) for 'nested_types'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'nullable_underlying_type'.
+[2026-03-23 14:42:02] Merged 326 bytes for 'nullable_underlying_type'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'numlines'.
+[2026-03-23 14:42:02] Merged 3117 bytes (3.04 KiB) for 'numlines'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'explicitly_implements'.
+[2026-03-23 14:42:02] Merged 15804 bytes (15.43 KiB) for 'explicitly_implements'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'indexers'.
+[2026-03-23 14:42:02] Merged 4685 bytes (4.58 KiB) for 'indexers'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'init_only_accessors'.
+[2026-03-23 14:42:02] Merged 173 bytes for 'init_only_accessors'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'constant_value'.
+[2026-03-23 14:42:02] Merged 18388 bytes (17.96 KiB) for 'constant_value'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'overrides'.
+[2026-03-23 14:42:02] Merged 17411 bytes (17.00 KiB) for 'overrides'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'general_type_parameter_constraints'.
+[2026-03-23 14:42:02] Merged 1327 bytes (1.30 KiB) for 'general_type_parameter_constraints'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'events'.
+[2026-03-23 14:42:02] Merged 1260 bytes (1.23 KiB) for 'events'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'event_accessors'.
+[2026-03-23 14:42:02] Merged 2079 bytes (2.03 KiB) for 'event_accessors'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'event_accessor_location'.
+[2026-03-23 14:42:02] Merged 542 bytes for 'event_accessor_location'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'event_location'.
+[2026-03-23 14:42:02] Merged 360 bytes for 'event_location'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'enum_underlying_type'.
+[2026-03-23 14:42:02] Merged 1253 bytes (1.22 KiB) for 'enum_underlying_type'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'type_annotation'.
+[2026-03-23 14:42:02] Merged 4498 bytes (4.39 KiB) for 'type_annotation'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'indexer_location'.
+[2026-03-23 14:42:02] Merged 843 bytes for 'indexer_location'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'scoped_annotation'.
+[2026-03-23 14:42:02] Merged 3220 bytes (3.14 KiB) for 'scoped_annotation'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'operators'.
+[2026-03-23 14:42:02] Merged 21404 bytes (20.90 KiB) for 'operators'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'operator_location'.
+[2026-03-23 14:42:02] Merged 2494 bytes (2.44 KiB) for 'operator_location'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'pointer_referent_type'.
+[2026-03-23 14:42:02] Merged 211 bytes for 'pointer_referent_type'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'tuple_underlying_type'.
+[2026-03-23 14:42:02] Merged 522 bytes for 'tuple_underlying_type'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'locations_default'.
+[2026-03-23 14:42:02] Merged 3853 bytes (3.76 KiB) for 'locations_default'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'tuple_element'.
+[2026-03-23 14:42:02] Merged 2581 bytes (2.52 KiB) for 'tuple_element'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'destructors'.
+[2026-03-23 14:42:02] Merged 367 bytes for 'destructors'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'destructor_location'.
+[2026-03-23 14:42:02] Merged 163 bytes for 'destructor_location'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'function_pointer_calling_conventions'.
+[2026-03-23 14:42:02] Merged 32 bytes for 'function_pointer_calling_conventions'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'function_pointer_return_type'.
+[2026-03-23 14:42:02] Merged 33 bytes for 'function_pointer_return_type'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'xmllocations'.
+[2026-03-23 14:42:02] Merged 931 bytes for 'xmllocations'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'xmlElements'.
+[2026-03-23 14:42:02] Merged 1098 bytes (1.07 KiB) for 'xmlElements'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'xmlAttrs'.
+[2026-03-23 14:42:02] Merged 2219 bytes (2.17 KiB) for 'xmlAttrs'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'xmlChars'.
+[2026-03-23 14:42:02] Merged 157 bytes for 'xmlChars'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'xmlEncoding'.
+[2026-03-23 14:42:02] Merged 58 bytes for 'xmlEncoding'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'xmlComments'.
+[2026-03-23 14:42:02] Merged 55 bytes for 'xmlComments'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'using_directive_location'.
+[2026-03-23 14:42:02] Merged 88 bytes for 'using_directive_location'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'type_mention_location'.
+[2026-03-23 14:42:02] Merged 134 bytes for 'type_mention_location'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'expr_flowstate'.
+[2026-03-23 14:42:02] Merged 312 bytes for 'expr_flowstate'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'type_mention'.
+[2026-03-23 14:42:02] Merged 272 bytes for 'type_mention'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'statements'.
+[2026-03-23 14:42:02] Merged 152 bytes for 'statements'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'stmt_parent_top_level'.
+[2026-03-23 14:42:02] Merged 55 bytes for 'stmt_parent_top_level'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'stmt_location'.
+[2026-03-23 14:42:02] Merged 167 bytes for 'stmt_location'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'stmt_parent'.
+[2026-03-23 14:42:02] Merged 213 bytes for 'stmt_parent'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'expr_access'.
+[2026-03-23 14:42:02] Merged 410 bytes for 'expr_access'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'expr_argument'.
+[2026-03-23 14:42:02] Merged 88 bytes for 'expr_argument'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'expr_call'.
+[2026-03-23 14:42:02] Merged 311 bytes for 'expr_call'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'anonymous_types'.
+[2026-03-23 14:42:02] Merged 25 bytes for 'anonymous_types'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'using_namespace_directives'.
+[2026-03-23 14:42:02] Merged 123 bytes for 'using_namespace_directives'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'namespace_declarations'.
+[2026-03-23 14:42:02] Merged 30 bytes for 'namespace_declarations'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'parent_namespace_declaration'.
+[2026-03-23 14:42:02] Merged 30 bytes for 'parent_namespace_declaration'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'namespace_declaration_location'.
+[2026-03-23 14:42:02] Merged 30 bytes for 'namespace_declaration_location'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'localvars'.
+[2026-03-23 14:42:02] Merged 133 bytes for 'localvars'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'localvar_location'.
+[2026-03-23 14:42:02] Merged 48 bytes for 'localvar_location'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'implicitly_typed_array_creation'.
+[2026-03-23 14:42:02] Merged 23 bytes for 'implicitly_typed_array_creation'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'commentblock'.
+[2026-03-23 14:42:02] Merged 37 bytes for 'commentblock'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'commentblock_location'.
+[2026-03-23 14:42:02] Merged 66 bytes for 'commentblock_location'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'commentblock_binding'.
+[2026-03-23 14:42:02] Merged 285 bytes for 'commentblock_binding'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'commentline'.
+[2026-03-23 14:42:02] Merged 156 bytes for 'commentline'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'commentline_location'.
+[2026-03-23 14:42:02] Merged 96 bytes for 'commentline_location'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'commentblock_child'.
+[2026-03-23 14:42:02] Merged 207 bytes for 'commentblock_child'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'using_global'.
+[2026-03-23 14:42:02] Merged 36 bytes for 'using_global'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'compilations'.
+[2026-03-23 14:42:02] Merged 30 bytes for 'compilations'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'compilation_assembly'.
+[2026-03-23 14:42:02] Merged 30 bytes for 'compilation_assembly'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'compilation_args'.
+[2026-03-23 14:42:02] Merged 44 bytes for 'compilation_args'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'compilation_expanded_args'.
+[2026-03-23 14:42:02] Merged 841 bytes for 'compilation_expanded_args'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'compilation_compiling_files'.
+[2026-03-23 14:42:02] Merged 53 bytes for 'compilation_compiling_files'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'compilation_referencing_files'.
+[2026-03-23 14:42:02] Merged 1093 bytes (1.07 KiB) for 'compilation_referencing_files'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'diagnostics'.
+[2026-03-23 14:42:02] Merged 85 bytes for 'diagnostics'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'diagnostic_for'.
+[2026-03-23 14:42:02] Merged 58 bytes for 'diagnostic_for'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'compilation_info'.
+[2026-03-23 14:42:02] Merged 40 bytes for 'compilation_info'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'compilation_time'.
+[2026-03-23 14:42:02] Merged 123 bytes for 'compilation_time'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'compilation_finished'.
+[2026-03-23 14:42:02] Merged 71 bytes for 'compilation_finished'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'xmlNs'.
+[2026-03-23 14:42:02] Merged 51 bytes for 'xmlNs'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'xmlHasNs'.
+[2026-03-23 14:42:02] Merged 62 bytes for 'xmlHasNs'.
+[2026-03-23 14:42:02] Merging 1 fragment for 'sourceLocationPrefix'.
+[2026-03-23 14:42:02] Merged 19 bytes for 'sourceLocationPrefix'.
+[2026-03-23 14:42:02] Saving string and id pools to disk.
+[2026-03-23 14:42:03] Finished importing TRAP files.
+[2026-03-23 14:42:03] Read 68.53 MiB of uncompressed TRAP data.
+[2026-03-23 14:42:03] Uncompressed relation data size: 16.99 MiB
+[2026-03-23 14:42:03] Relation data size: 4.08 MiB (merge rate: 2.37 MiB/s)
+[2026-03-23 14:42:03] String pool size: 5.53 MiB
+[2026-03-23 14:42:03] ID pool size: 21.00 MiB
+[2026-03-23 14:42:03] [PROGRESS] dataset import> Finished writing database (relations: 4.08 MiB; string pool: 5.53 MiB).
+[2026-03-23 14:42:03] Pausing evaluation to close the cache at sequence stamp o+253
+[2026-03-23 14:42:03] The disk cache is freshly trimmed; leave it be.
+[2026-03-23 14:42:03] Unpausing evaluation
+[2026-03-23 14:42:03] Plumbing command codeql dataset import completed.
+[2026-03-23 14:42:03] [PROGRESS] database finalize> TRAP import complete (6.9s).
+[2026-03-23 14:42:03] Running plumbing command: codeql database cleanup -- C:\Users\LovekushChauhan\SampleApi\mydb
+[2026-03-23 14:42:04] [PROGRESS] database cleanup> Cleaning up existing TRAP files after import...
+[2026-03-23 14:42:04] [PROGRESS] database cleanup> TRAP files cleaned up (874ms).
+[2026-03-23 14:42:04] [PROGRESS] database cleanup> Cleaning up scratch directory...
+[2026-03-23 14:42:04] [PROGRESS] database cleanup> Scratch directory cleaned up (6ms).
+[2026-03-23 14:42:04] Running plumbing command: codeql dataset cleanup -- C:\Users\LovekushChauhan\SampleApi\mydb\db-csharp
+[2026-03-23 14:42:04] [PROGRESS] dataset cleanup> Cleaning up dataset in C:\Users\LovekushChauhan\SampleApi\mydb\db-csharp.
+[2026-03-23 14:42:04] Trimming disk cache at C:\Users\LovekushChauhan\SampleApi\mydb\db-csharp\default\cache in mode trim.
+[2026-03-23 14:42:04] Sequence stamp origin is -5933509667792789780
+[2026-03-23 14:42:04] Pausing evaluation to quickly trim memory at sequence stamp o+0
+[2026-03-23 14:42:04] Unpausing evaluation
+[2026-03-23 14:42:04] Pausing evaluation to zealously trim disk at sequence stamp o+1
+[2026-03-23 14:42:04] Unpausing evaluation
+[2026-03-23 14:42:04] Trimming completed (9ms): Trimmed disposable data from cache.
+[2026-03-23 14:42:04] Pausing evaluation to close the cache at sequence stamp o+2
+[2026-03-23 14:42:04] The disk cache is freshly trimmed; leave it be.
+[2026-03-23 14:42:04] Unpausing evaluation
+[2026-03-23 14:42:04] [PROGRESS] dataset cleanup> Trimmed disposable data from cache.
+[2026-03-23 14:42:04] [PROGRESS] dataset cleanup> Finalizing dataset in C:\Users\LovekushChauhan\SampleApi\mydb\db-csharp
+[2026-03-23 14:42:04] [DETAILS] dataset cleanup> Finished deleting ID pool from C:\Users\LovekushChauhan\SampleApi\mydb\db-csharp (23ms).
+[2026-03-23 14:42:04] Plumbing command codeql dataset cleanup completed.
+[2026-03-23 14:42:04] Plumbing command codeql database cleanup completed with status 0.
+[2026-03-23 14:42:04] [PROGRESS] database finalize> Finished zipping source archive (17.51 KiB).
+[2026-03-23 14:42:04] Plumbing command codeql database finalize completed.
+[2026-03-23 14:42:04] [PROGRESS] database create> Successfully created database at C:\Users\LovekushChauhan\SampleApi\mydb.
+[2026-03-23 14:42:04] Terminating normally.

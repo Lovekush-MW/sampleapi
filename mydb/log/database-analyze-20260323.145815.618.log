@@ -1,0 +1,16 @@
+[2026-03-23 14:58:15] This is codeql database analyze mydb codeql/csharp-queries --format=sarifv2.1.0 --output=results.sarif
+[2026-03-23 14:58:15] Log file was started late.
+[2026-03-23 14:58:15] [PROGRESS] database analyze> Running queries.
+[2026-03-23 14:58:15] Running plumbing command: codeql database run-queries --evaluator-log-level=5 --warnings=show --qlconfig-file=C:\Users\LovekushChauhan\sampleapi\qlconfig.yml --dynamic-join-order-mode=none --no-rerun -- C:\Users\LovekushChauhan\SampleApi\mydb codeql/csharp-queries
+[2026-03-23 14:58:15] Calling plumbing command: codeql resolve ram --dataset=C:\Users\LovekushChauhan\SampleApi\mydb\db-csharp --format=json
+[2026-03-23 14:58:15] [PROGRESS] resolve ram> Stringpool size measured as 5800362
+[2026-03-23 14:58:15] Plumbing command codeql resolve ram completed:
+                      [
+                        "-J-Xmx1800M",
+                        "--off-heap-ram=1468"
+                      ]
+[2026-03-23 14:58:15] Spawning plumbing command: execute queries -J-Xmx1800M --off-heap-ram=1468 --verbosity=progress --logdir=C:\Users\LovekushChauhan\SampleApi\mydb\log --evaluator-log-level=5 --warnings=show --qlconfig-file=C:\Users\LovekushChauhan\sampleapi\qlconfig.yml --dynamic-join-order-mode=none --no-rerun --output=C:\Users\LovekushChauhan\SampleApi\mydb\results -- C:\Users\LovekushChauhan\SampleApi\mydb\db-csharp codeql/csharp-queries
+[2026-03-23 14:59:16] [ERROR] Spawned process exited abnormally (code 2; tried to run: [C:\codeql\tools\win64\java\bin\java.exe, -Xmx1800M, "-Djava.library.path=C:\codeql\tools\win64\java\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\codeql;C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\MinGW\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Git\cmd;C:\Users\LovekushChauhan\AppData\Roaming\fnm\node-versions\v24.11.1\installation;C:\Program Files\dotnet\;C:\Users\LovekushChauhan\AppData\Local\Microsoft\WindowsApps;C:\Users\LovekushChauhan\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\LovekushChauhan\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\LovekushChauhan\.dotnet\tools;C:\Users\LovekushChauhan\AppData\Local\Microsoft\WinGet\Packages\nektos.act_Microsoft.Winget.Source_8wekyb3d8bbwe;;.", -cp, C:\codeql\tools\codeql.jar, com.semmle.cli2.CodeQL, env_argv, execute, queries, -J-Xmx1800M, _, _, _, _, _, _, _, --no-rerun, _, --, _, codeql/csharp-queries])
+[2026-03-23 14:59:16] Plumbing command codeql execute queries terminated with status 2.
+[2026-03-23 14:59:16] Plumbing command codeql database run-queries completed with status 2.
+[2026-03-23 14:59:16] Exiting with code 2

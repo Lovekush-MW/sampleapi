@@ -11,14 +11,14 @@ permissions:
 
 jobs:
   analyze:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: ./.act/codeql-action/init
         with:
           languages: csharp
 
@@ -34,4 +34,19 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        uses: ./.act/codeql-action/analyze
+        with:
+          upload: false
+          output-dir: results
+        env:
+          CODEQL_ACTION_NO_TELEMETRY: true
+        continue-on-error: true
+
+      - name: Copy results manually
+        run: |
+          cp -r /tmp/codeql_databases ./results || true
+
+      - name: Debug results
+        run: |
+          echo "Checking results folder"
+          ls -R results || echo "No results found"

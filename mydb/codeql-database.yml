@@ -1,0 +1,13 @@
+---
+sourceLocationPrefix: C:\Users\LovekushChauhan\SampleApi
+baselineLinesOfCode: 189
+unicodeNewlines: false
+columnKind: utf16
+primaryLanguage: csharp
+creationMetadata:
+  sha: 9ecbe77b671ca503a5e1d298494a8f58d6901ce7
+  cliVersion: 2.25.0
+  creationTime: 2026-03-23T09:10:04.984762300Z
+overlayBaseDatabase: false
+overlayDatabase: false
+finalised: true
